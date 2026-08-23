@@ -16,10 +16,10 @@ const TITLES = {
 
 // ---- dữ liệu demo ----
 const DEMO_ORDERS = [
-  { code: 'CH-D9001', customer: { name: 'Nguyễn Thị Lan' }, method: 'delivery', items: [{ qty: 2, name: 'Phin Sữa Đá' }, { qty: 1, name: 'Bánh Mì Que' }], total: 84000, status: 'new', time: '08:12', branchName: null },
-  { code: 'CH-D9002', customer: { name: 'Trần Văn Hùng' }, method: 'pickup', branchName: 'CN Nguyễn Huệ', items: [{ qty: 1, name: 'Trà Đào Cam Sả' }], total: 35000, status: 'preparing', time: '08:25', address: null },
-  { code: 'CH-D9003', customer: { name: 'Lê Minh Châu' }, method: 'delivery', items: [{ qty: 3, name: 'Trà Sữa Trân Châu' }], total: 129000, status: 'shipping', time: '08:31', address: '25 Hoa Sữa, Phú Nhuận' },
-  { code: 'CH-D9004', customer: { name: 'Phạm Khánh Linh' }, method: 'pickup', branchName: 'CN Thảo Điền', items: [{ qty: 1, name: 'Cold Brew Tonic' }, { qty: 1, name: 'Bánh Flan' }], total: 67000, status: 'done', time: '07:58', address: null }
+  { code: 'CH-D9001', mock: true, customer: { name: 'Nguyễn Thị Lan' }, method: 'delivery', items: [{ qty: 2, name: 'Phin Sữa Đá' }, { qty: 1, name: 'Bánh Mì Que' }], total: 84000, status: 'new', time: '08:12', branchName: null },
+  { code: 'CH-D9002', mock: true, customer: { name: 'Trần Văn Hùng' }, method: 'pickup', branchName: 'CN Nguyễn Huệ', items: [{ qty: 1, name: 'Trà Đào Cam Sả' }], total: 35000, status: 'preparing', time: '08:25', address: null },
+  { code: 'CH-D9003', mock: true, customer: { name: 'Lê Minh Châu' }, method: 'delivery', items: [{ qty: 3, name: 'Trà Sữa Trân Châu' }], total: 129000, status: 'shipping', time: '08:31', address: '25 Hoa Sữa, Phú Nhuận' },
+  { code: 'CH-D9004', mock: true, customer: { name: 'Phạm Khánh Linh' }, method: 'pickup', branchName: 'CN Thảo Điền', items: [{ qty: 1, name: 'Cold Brew Tonic' }, { qty: 1, name: 'Bánh Flan' }], total: 67000, status: 'done', time: '07:58', address: null }
 ];
 
 const DEMO_BOOKINGS = [
