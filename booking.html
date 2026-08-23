@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đặt bàn trước | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="booking">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Đặt bàn trước</h1>
+      <nav class="breadcrumb"><a href="/index.html">Trang chủ</a><span>/</span><span>Đặt bàn</span></nav>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div style="max-width:760px;margin-inline:auto">
+
+        <form id="booking-form" class="panel" novalidate>
+          <div class="form-group">
+            <label for="bk-branch">Chi nhánh <span class="req">*</span></label>
+            <select class="input" id="bk-branch">
+              <option value="">— đang tải chi nhánh —</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="fg-bk-date">
+              <label for="bk-date">Ngày <span class="req">*</span></label>
+              <input type="date" id="bk-date" class="input">
+              <p class="form-error">Chọn ngày hợp lệ (từ hôm nay)</p>
+            </div>
+            <div class="form-group">
+              <label for="bk-guests">Số khách</label>
+              <select class="input" id="bk-guests">
+                <option value="1">1 khách</option><option value="2" selected>2 khách</option>
+                <option value="3">3 khách</option><option value="4">4 khách</option>
+                <option value="5">5 khách</option><option value="6">6 khách</option>
+                <option value="7">7 khách</option><option value="8">8 khách</option>
+                <option value="9">9 khách</option><option value="10">10 khách</option>
+                <option value="11">11 khách</option><option value="12">12 khách</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" id="fg-bk-slot">
+            <label>Giờ <span class="req">*</span></label>
+            <div class="chips" id="bk-time-slots"></div>
+            <p class="form-error">Chọn một khung giờ nhé!</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="fg-bk-name">
+              <label for="bk-name">Họ tên <span class="req">*</span></label>
+              <input class="input" id="bk-name" placeholder="Tên của bạn">
+              <p class="form-error">Vui lòng nhập họ tên</p>
+            </div>
+            <div class="form-group" id="fg-bk-phone">
+              <label for="bk-phone">Số điện thoại <span class="req">*</span></label>
+              <input class="input" id="bk-phone" type="tel" placeholder="09xx xxx xxx">
+              <p class="form-error">Số điện thoại chưa hợp lệ</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bk-note">Dặn dò thêm</label>
+            <textarea class="input" id="bk-note" rows="2" placeholder="Sinh nhật, cần bàn gần cửa sổ…"></textarea>
+          </div>
+
+          <button type="submit" id="btn-book" class="btn btn-primary btn-block">Xác nhận đặt bàn</button>
+          <p class="form-hint text-center mt-1">Giữ chỗ miễn phí · Trễ quá 15 phút xin thông cảm nếu bàn được nhường</p>
+        </form>
+
+        <div class="panel text-center" id="booking-success" hidden>
+          <i class="fa-solid fa-circle-check" style="font-size:4rem;color:var(--c-success)"></i>
+          <h2 class="mt-2">Đặt bàn thành công!</h2>
+          <div class="order-code" id="bs-code">BK-000000</div>
+          <p id="bs-info" class="muted"></p>
+          <a href="/index.html" class="btn btn-outline mt-2">Về trang chủ</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

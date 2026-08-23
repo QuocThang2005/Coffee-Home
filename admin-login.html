@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập quản trị — Coffee Home</title>
+  <meta name="description" content="Khu vực đăng nhập quản trị dành riêng cho nhân viên Coffee Home.">
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="admin-login" class="admin-login-body">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+
+  <section class="section">
+    <div class="container">
+      <div style="max-width:430px;margin-inline:auto;text-align:center">
+        <img src="/images/logo.svg" alt="Logo Coffee Home" width="64" style="margin-inline:auto">
+        <h1 class="mt-2">Khu vực quản trị</h1>
+        <p class="muted">Chỉ dành cho nhân viên Coffee Home.</p>
+        <div class="panel mt-3" style="text-align:left">
+          <form id="al-form" novalidate>
+            <div class="form-group" id="fg-aluser">
+              <label for="al-user">Tên đăng nhập</label>
+              <input class="input" type="text" id="al-user" placeholder="admin">
+            </div>
+            <div class="form-group" id="fg-alpass">
+              <label for="al-pass">Mật khẩu</label>
+              <input class="input" type="password" id="al-pass">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-2" id="al-submit">Đăng nhập quản trị</button>
+            <p class="form-hint text-center mt-2">Bản demo: admin / 123456</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

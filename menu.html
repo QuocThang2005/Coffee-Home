@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thực đơn | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="menu">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Thực đơn</h1>
+      <nav class="breadcrumb"><a href="/index.html">Trang chủ</a><span>/</span><span>Thực đơn</span></nav>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div id="menu-toolbar" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px">
+        <div class="chips" id="category-chips">
+          <button class="chip on" data-cat="all">Tất cả</button>
+          <button class="chip" data-cat="ca-phe">Cà phê</button>
+          <button class="chip" data-cat="tra-sua">Trà sữa</button>
+          <button class="chip" data-cat="tra-trai-cay">Trà trái cây</button>
+          <button class="chip" data-cat="da-xay">Đá xay</button>
+          <button class="chip" data-cat="khac">Khác</button>
+        </div>
+        <input type="search" id="menu-search" class="input" placeholder="Tìm trong thực đơn…" style="flex:1;min-width:180px;max-width:280px">
+        <select id="menu-sort" class="input" style="width:auto">
+          <option value="popular" selected>Phổ biến nhất</option>
+          <option value="gia-tang">Giá tăng dần</option>
+          <option value="gia-giam">Giá giảm dần</option>
+          <option value="name">Tên A-Z</option>
+        </select>
+      </div>
+
+      <p class="muted mb-2" id="menu-count"></p>
+      <div class="grid-products" id="menu-grid"></div>
+
+      <div class="empty-state" id="menu-empty" hidden>
+        <i class="fa-solid fa-mug-saucer"></i>
+        <h3>Không tìm thấy món nào</h3>
+        <p>Thử từ khoá khác hoặc xem tất cả thực đơn nhé!</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

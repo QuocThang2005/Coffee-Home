@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo tài khoản — Coffee Home</title>
+  <meta name="description" content="Đăng ký thành viên Coffee Home miễn phí — tặng ngay 50 điểm chào mừng, tích điểm mỗi ly cà phê.">
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="register">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+
+  <div class="auth-wrap">
+    <div class="auth-side" style="background-image:url('/images/banners/auth-side.svg')">
+      <div class="auth-quote">
+        <h2>Tạo tài khoản — tích điểm từ ly đầu tiên.</h2>
+        <p>Coffee Home — Cà phê nhà làm, đậm đà Việt Nam.</p>
+      </div>
+    </div>
+    <div class="auth-form-col">
+      <div class="auth-form-box">
+        <h1>Tạo tài khoản</h1>
+        <p class="sub">Miễn phí, tặng ngay 50 điểm chào mừng.</p>
+
+        <div class="social-auth">
+          <button type="button" class="social-btn" id="btn-google"><i class="fa-brands fa-google"></i> Google</button>
+          <button type="button" class="social-btn" id="btn-facebook"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+        </div>
+
+        <div class="divider-or">hoặc</div>
+
+        <form id="rg-form" novalidate>
+          <div class="form-group" id="fg-rname">
+            <label for="rg-name">Họ tên*</label>
+            <input class="input" type="text" id="rg-name">
+          </div>
+          <div class="form-group" id="fg-remail">
+            <label for="rg-email">Email*</label>
+            <input class="input" type="email" id="rg-email">
+          </div>
+          <div class="form-row">
+            <div class="form-group" id="fg-rphone">
+              <label for="rg-phone">Số điện thoại</label>
+              <input class="input" type="tel" id="rg-phone">
+            </div>
+            <div class="form-group" id="fg-rpass">
+              <label for="rg-pass">Mật khẩu*</label>
+              <input class="input" type="password" id="rg-pass">
+            </div>
+            <div class="form-group" id="fg-rpass2">
+              <label for="rg-pass2">Nhập lại mật khẩu*</label>
+              <input class="input" type="password" id="rg-pass2">
+            </div>
+          </div>
+          <div class="form-group">
+            <label style="display:flex;gap:8px;font-size:.88rem"><input type="checkbox" id="rg-agree"> <span>Tôi đồng ý <a href="/policy-member.html">quy định thành viên</a> của quán</span></label>
+            <p class="form-error" id="rg-agree-error" hidden>Bạn cần đồng ý điều kiện</p>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="rg-submit">Tạo tài khoản</button>
+          <p class="auth-alt">Đã có tài khoản? <a href="/login.html">Đăng nhập</a></p>
+          <p class="form-hint text-center">Demo frontend — chưa gọi backend.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

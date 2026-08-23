@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Python backend
+.venv/
+__pycache__/
+*.pyc
+
+# Database & uploads
+*.db
+uploads/
+
+# Env & secrets
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+Thumbs.db

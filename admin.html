@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản trị | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="admin">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+  <div class="admin-layout">
+
+    <aside class="admin-sidebar">
+      <nav class="as-links" id="admin-nav">
+        <a href="#overview" class="on" data-view="overview"><i class="fa-solid fa-gauge-high"></i> Tổng quan</a>
+        <a href="#orders" data-view="orders"><i class="fa-solid fa-receipt"></i> Đơn hàng</a>
+        <a href="#products" data-view="products"><i class="fa-solid fa-mug-hot"></i> Sản phẩm</a>
+        <a href="#bookings" data-view="bookings"><i class="fa-solid fa-chair"></i> Đặt bàn</a>
+        <a href="#promos" data-view="promos"><i class="fa-solid fa-ticket"></i> Khuyến mãi</a>
+        <a href="#customers" data-view="customers"><i class="fa-solid fa-users"></i> Khách hàng</a>
+      </nav>
+    </aside>
+
+    <section class="admin-main">
+      <div class="admin-topbar">
+        <h2 id="view-title">Tổng quan hôm nay</h2>
+        <span class="muted" style="font-size:.88rem"><i class="fa-regular fa-clock"></i> Dữ liệu demo — backend sẽ thay sau</span>
+      </div>
+
+      <!-- Tổng quan -->
+      <div class="admin-view" id="view-overview"></div>
+      <div class="admin-view" id="view-orders" hidden></div>
+      <div class="admin-view" id="view-products" hidden></div>
+      <div class="admin-view" id="view-bookings" hidden></div>
+      <div class="admin-view" id="view-promos" hidden></div>
+      <div class="admin-view" id="view-customers" hidden></div>
+
+    </section>
+  </div>
+</main>
+
+<div id="footer"></div>
+<div class="modal-backdrop" id="modal-backdrop" hidden></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

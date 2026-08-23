@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="checkout">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Thanh toán</h1>
+      <nav class="breadcrumb"><a href="/index.html">Trang chủ</a><span>/</span><span>Thanh toán</span></nav>
+    </div>
+  </section>
+
+  <form id="checkout-form" novalidate>
+    <section class="section">
+      <div class="container">
+        <div class="checkout-grid">
+
+          <div style="display:grid;gap:22px">
+
+            <!-- 1 · Phương thức nhận -->
+            <div class="panel">
+              <h3>1 · Nhận nước thế nào?</h3>
+              <div class="radio-cards mt-2">
+                <label class="radio-card">
+                  <input type="radio" name="method" value="pickup" checked>
+                  <i class="rc-icon fa-solid fa-store"></i>
+                  <div>
+                    <strong>Nhận tại quán</strong>
+                    <small class="rc-sub">Miễn phí · lấy tại chi nhánh bạn chọn</small>
+                  </div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="method" value="delivery">
+                  <i class="rc-icon fa-solid fa-truck-fast"></i>
+                  <div>
+                    <strong>Giao tận nơi</strong>
+                    <small class="rc-sub">Freeship bán kính 5km cho đơn từ 50.000₫</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- 2 · Thông tin -->
+            <div class="panel">
+              <h3>2 · Thông tin nhận nước</h3>
+              <div class="form-row mt-2">
+                <div class="form-group" id="fg-name">
+                  <label for="co-name">Họ tên <span class="req">*</span></label>
+                  <input class="input" id="co-name" placeholder="Nguyễn Văn A">
+                  <p class="form-error">Vui lòng nhập họ tên</p>
+                </div>
+                <div class="form-group" id="fg-phone">
+                  <label for="co-phone">Số điện thoại <span class="req">*</span></label>
+                  <input class="input" id="co-phone" type="tel" placeholder="09xx xxx xxx">
+                  <p class="form-error">Số điện thoại chưa hợp lệ</p>
+                </div>
+              </div>
+
+              <div class="form-group pickup-only">
+                <label for="branch-select">Chi nhánh nhận <span class="req">*</span></label>
+                <select class="input" id="branch-select">
+                  <option value="">— đang tải chi nhánh —</option>
+                </select>
+                <p class="form-error">Chọn chi nhánh nhé!</p>
+              </div>
+
+              <div class="form-group delivery-only">
+                <label for="co-address">Địa chỉ giao <span class="req">*</span></label>
+                <textarea class="input" id="co-address" rows="3" placeholder="Số nhà, đường, phường/xã…"></textarea>
+                <button type="button" class="btn btn-outline btn-sm mt-1" id="btn-gps">
+                  Lấy vị trí GPS của tôi
+                </button>
+                <input type="hidden" id="co-lat"><input type="hidden" id="co-lng">
+                <p class="form-error">Nhập địa chỉ giao hàng</p>
+              </div>
+
+              <div class="form-row pickup-only">
+                <div class="form-group">
+                  <label for="co-time">Giờ lấy nước</label>
+                  <input class="input" id="co-time" type="time" value="10:30">
+                </div>
+              </div>
+
+              <div class="form-group delivery-only">
+                <label>Thời gian giao dự kiến</label>
+                <p class="muted" style="padding:10px 2px">20–35 phút sau khi xác nhận đơn</p>
+              </div>
+
+              <div class="form-group">
+                <label for="co-note">Ghi chú cho quán</label>
+                <textarea class="input" id="co-note" rows="2" placeholder="Ít đá, thêm ly riêng…"></textarea>
+              </div>
+            </div>
+
+            <!-- 3 · Thanh toán -->
+            <div class="panel">
+              <h3>3 · Thanh toán qua?</h3>
+              <div class="radio-cards mt-2">
+                <label class="radio-card">
+                  <input type="radio" name="payment" value="cod" checked>
+                  <i class="rc-icon fa-solid fa-money-bill-wave"></i>
+                  <div><strong>Tiền mặt khi nhận</strong></div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="payment" value="bank">
+                  <i class="rc-icon fa-solid fa-building-columns"></i>
+                  <div><strong>Chuyển khoản ngân hàng</strong></div>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="payment" value="momo">
+                  <i class="rc-icon fa-solid fa-qrcode"></i>
+                  <div><strong>MoMo / ZaloPay / VNPay</strong></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tóm tắt -->
+          <aside class="summary-box">
+            <h3>Đơn của bạn</h3>
+            <div id="sum-items"></div>
+            <div class="sum-row mt-2"><span>Tạm tính</span><span id="sum-subtotal">0₫</span></div>
+            <div class="sum-row discount"><span>Giảm giá</span><span id="sum-discount">0₫ <small id="sum-voucher-name"></small></span></div>
+            <div class="sum-row"><span>Phí giao hàng</span><span id="sum-ship">—</span></div>
+            <div class="sum-row total"><span>Tổng cộng</span><span id="sum-grandtotal">0₫</span></div>
+            <button type="submit" id="btn-place-order" class="btn btn-primary btn-block mt-2">Đặt hàng</button>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </form>
+
+  <section id="checkout-success" hidden>
+    <div class="container">
+      <div class="order-success">
+        <div class="os-icon"><i class="fa-solid fa-check"></i></div>
+        <h2>Đặt nước thành công!</h2>
+        <p>Nhân viên quán sẽ gọi xác nhận trong ít phút.</p>
+        <div class="order-code" id="os-code">CH-000000</div>
+        <p class="muted" id="os-points"></p>
+        <div class="mt-3" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="/index.html" class="btn btn-primary">Về trang chủ</a>
+          <a href="/account.html?tab=orders" class="btn btn-outline">Xem đơn của tôi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

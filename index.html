@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Home — Cà phê nhà làm, đậm đà Việt Nam</title>
+  <meta name="description" content="Coffee Home - đặt nước online, đặt bàn trước, tích điểm đổi quà. Phin sữa đá, trà đào cam sả và hơn thế nữa.">
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="home">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+
+  <!-- Hero slider -->
+  <section class="hero" id="home-hero"></section>
+
+  <!-- Ưu đãi chạy chữ -->
+  <div style="background:var(--c-primary);color:#fff;padding:9px 0;font-size:.85rem;text-align:center;letter-spacing:.5px">
+    <i class="fa-solid fa-bolt" style="color:var(--c-accent)"></i>
+    Tuần này: giảm 15% Phin Sữa Đá · Freeship đơn từ 50k (mã FREESHIP) · Tích điểm x2 cuối tuần
+  </div>
+
+  <!-- Danh mục -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Menu của chúng tôi</span>
+        <h2>Bạn đang thèm gì hôm nay?</h2>
+      </div>
+      <div class="chips" id="home-cats" style="justify-content:center"></div>
+    </div>
+  </section>
+
+  <!-- Best sellers -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head-row">
+        <h2><i class="fa-solid fa-fire" style="color:var(--c-danger)"></i> Bán chạy nhất quán</h2>
+        <a class="btn btn-outline btn-sm" href="/menu.html">Xem tất cả <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="grid-products" id="best-grid"></div>
+    </div>
+  </section>
+
+  <!-- Câu chuyện -->
+  <section class="section">
+    <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center">
+      <img src="/images/banners/banner1.svg" alt="Không gian Coffee Home" style="border-radius:18px;box-shadow:var(--shadow)">
+      <div>
+        <span class="eyebrow" style="color:var(--c-accent);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem">Câu chuyện quán</span>
+        <h2 style="font-size:1.9rem;margin:8px 0 16px">Từ căn nhà nhỏ đến 3 chi nhánh</h2>
+        <p class="muted" style="margin-bottom:14px">Coffee Home bắt đầu từ chiếc phin của bà, góc hiên nhà và mùi cà phê rang mỗi sáng.
+           Hôm nay chúng tôi mang đúng hương vị ấy đến cho bạn — nguyên chất, không pha trộn, pha bằng cả sự tử tế.</p>
+        <ul class="mt-2" style="display:grid;gap:10px;font-size:.95rem">
+          <li><i class="fa-solid fa-check" style="color:var(--c-success);margin-right:10px"></i>Hạt Arabica Cầu Đất &amp; Robusta Buôn Ma Thuột</li>
+          <li><i class="fa-solid fa-check" style="color:var(--c-success);margin-right:10px"></i>Rang mộc mỗi tuần, pha chế ngay khi bạn gọi</li>
+          <li><i class="fa-solid fa-check" style="color:var(--c-success);margin-right:10px"></i>Không gian xanh - wifi miễn phí, chỗ học làm việc</li>
+        </ul>
+        <a href="/about.html" class="btn btn-primary mt-3">Khám phá câu chuyện <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chi nhánh -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Gần bạn</span>
+        <h2>3 chi nhánh đang chờ bạn</h2>
+      </div>
+      <div class="grid-cards" id="branch-cards"></div>
+    </div>
+  </section>
+
+  <!-- CTA app -->
+  <section class="section">
+    <div class="container">
+      <div style="background:linear-gradient(120deg,var(--c-primary-dark),var(--c-primary));border-radius:22px;padding:46px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap">
+        <div style="max-width:560px">
+          <h2 style="font-size:1.7rem;margin-bottom:10px">Thành viên Coffee Home nhận gì?</h2>
+          <p style="opacity:.92">Đăng ký miễn phí — tích 1 điểm/10.000₫, voucher sinh nhật, ưu đãi độc quyền mỗi tháng.</p>
+        </div>
+        <div style="display:flex;gap:12px">
+          <a href="/register.html" class="btn btn-accent">Tham gia ngay</a>
+          <a href="/menu.html" class="btn btn-outline" style="border-color:#fff;color:#fff">Đặt nước trước</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

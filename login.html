@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập — Coffee Home</title>
+  <meta name="description" content="Đăng nhập tài khoản Coffee Home để đặt nước online, đặt bàn trước và tích điểm đổi quà.">
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="login">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+
+  <div class="auth-wrap">
+    <div class="auth-side" style="background-image:url('/images/banners/auth-side.svg')">
+      <div class="auth-quote">
+        <h2>Một ngụm phin đá — cả buổi sáng nhẹ cả người.</h2>
+        <p>Coffee Home — Cà phê nhà làm, đậm đà Việt Nam.</p>
+      </div>
+    </div>
+    <div class="auth-form-col">
+      <div class="auth-form-box">
+        <h1>Đăng nhập</h1>
+        <p class="sub">Chào mừng quay lại Coffee Home!</p>
+
+        <div class="social-auth">
+          <button type="button" class="social-btn" id="btn-google"><i class="fa-brands fa-google"></i> Google</button>
+          <button type="button" class="social-btn" id="btn-facebook"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+        </div>
+
+        <div class="divider-or">hoặc</div>
+
+        <form id="lg-form" novalidate>
+          <div class="form-group" id="fg-email">
+            <label for="lg-email">Email</label>
+            <input class="input" type="email" id="lg-email" placeholder="ban@vidu.com">
+          </div>
+          <div class="form-group" id="fg-pass">
+            <label for="lg-pass">Mật khẩu</label>
+            <div style="position:relative">
+              <input class="input" type="password" id="lg-pass" placeholder="••••••••">
+              <button type="button" class="icon-btn" id="lg-toggle-pass" style="position:absolute;right:4px;top:50%;transform:translateY(-50%)"><i class="fa-regular fa-eye"></i></button>
+            </div>
+          </div>
+          <div class="flex-between mb-2">
+            <label style="display:flex;gap:8px;align-items:center;font-size:.88rem"><input type="checkbox"> Ghi nhớ tôi</label>
+            <a href="/forgot-password.html" style="font-size:.85rem;color:var(--c-primary);font-weight:600">Quên mật khẩu?</a>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="lg-submit">Đăng nhập</button>
+          <p class="auth-alt">Chưa có tài khoản? <a href="/register.html">Đăng ký ngay</a></p>
+          <p class="form-hint text-center">Demo: nhập email bất kỳ hợp lệ là đăng nhập được (chờ backend).</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
