@@ -42,3 +42,22 @@
   .toast-container { left: 12px; right: 12px; }
   .toast { min-width: 0; width: 100%; }
 }
+
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .gallery-strip { grid-template-columns: repeat(3, 1fr); }
+  .review-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 30px 18px; }
+  .steps { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .review-grid { grid-template-columns: 1fr; }
+  .gallery-strip { grid-template-columns: repeat(2, 1fr); }
+  .scroll-row > * { flex-basis: 232px; }
+}
+
+@media (max-width: 480px) {
+  .grid-4 { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; }
+}

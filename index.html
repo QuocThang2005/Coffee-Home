@@ -40,6 +40,38 @@
     </div>
   </section>
 
+  <!-- Vì sao chọn quán -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Vì sao chọn Coffee Home</span>
+        <h2>Ngon ở ly, mến ở chỗ ngồi</h2>
+      </div>
+      <div class="grid-4">
+        <div class="info-card">
+          <div class="ic-icon"><i class="fa-solid fa-seedling"></i></div>
+          <h3>Nguyên liệu sạch mỗi ngày</h3>
+          <p>Hạt cà phê rang tại quán, sữa tươi và trái cây nhập chợ mỗi sáng — không phụ gia, không bảo quản lâu.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic-icon"><i class="fa-solid fa-mug-hot"></i></div>
+          <h3>Pha chế thủ công</h3>
+          <p>Mỗi ly được pha bởi barista có chứng nhận SCA — phin nhỏ giọt đúng nhịp, milk foam đánh tay.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <h3>Giao nhanh 30 phút</h3>
+          <p>Đơn trong bán kính 5km được giao nóng hổi bằng túi giữ nhiệt, miễn phí cho đơn từ 99.000₫.</p>
+        </div>
+        <div class="info-card">
+          <div class="ic-icon"><i class="fa-solid fa-gift"></i></div>
+          <h3>Tích điểm đổi quà</h3>
+          <p>Mỗi 10.000₫ = 1 điểm. Đủ 100 điểm đổi một ly bất kỳ, sinh nhật tặng voucher riêng.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Best sellers -->
   <section class="section section-alt">
     <div class="container">
@@ -51,10 +83,21 @@
     </div>
   </section>
 
+  <!-- Món mới -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head-row">
+        <h2><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--c-accent)"></i> Món mới về hôm nay</h2>
+        <a class="btn btn-outline btn-sm" href="/menu.html">Toàn bộ thực đơn <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="scroll-row" id="new-row"></div>
+    </div>
+  </section>
+
   <!-- Câu chuyện -->
   <section class="section">
     <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center">
-      <img src="/images/banners/banner1.svg" alt="Không gian Coffee Home" style="border-radius:18px;box-shadow:var(--shadow)">
+      <img src="/images/pexels-chunhsien-shih-162803768-36238393.jpg" alt="Không gian Coffee Home" style="border-radius:18px;box-shadow:var(--shadow);width:100%;aspect-ratio:4/3;object-fit:cover">
       <div>
         <span class="eyebrow" style="color:var(--c-accent);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem">Câu chuyện quán</span>
         <h2 style="font-size:1.9rem;margin:8px 0 16px">Từ căn nhà nhỏ đến 3 chi nhánh</h2>
@@ -70,6 +113,18 @@
     </div>
   </section>
 
+  <!-- Con số ấn tượng -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="stats-strip">
+        <div><div class="stat-num"><span data-count="18">0</span><b>+ món</b></div><p>Thức uống đặc sắc</p></div>
+        <div><div class="stat-num"><span data-count="3">0</span><b> chi nhánh</b></div><p>Trải khắp TP.HCM</p></div>
+        <div><div class="stat-num"><span data-count="12000">0</span><b>+</b></div><p>Khách hàng thân thiết</p></div>
+        <div><div class="stat-num"><span data-count="4.9" data-decimals="1">0</span><b>/5 ★</b></div><p>Điểm hài lòng trung bình</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Chi nhánh -->
   <section class="section section-alt">
     <div class="container">
@@ -78,6 +133,17 @@
         <h2>3 chi nhánh đang chờ bạn</h2>
       </div>
       <div class="grid-cards" id="branch-cards"></div>
+    </div>
+  </section>
+
+  <!-- Ưu đãi đang chạy -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head-row">
+        <h2><i class="fa-solid fa-ticket" style="color:var(--c-success)"></i> Ưu đãi đang chạy</h2>
+        <a class="btn btn-outline btn-sm" href="/voucher.html">Tất cả voucher <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div id="deal-list" style="display:grid;gap:16px;max-width:860px;margin-inline:auto"></div>
     </div>
   </section>
 
@@ -94,6 +160,81 @@
           <a href="/menu.html" class="btn btn-outline" style="border-color:#fff;color:#fff">Đặt nước trước</a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Đặt nước 4 bước -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Dễ như pha một ly mì</span>
+        <h2>Đặt nước chỉ với 4 bước</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><i class="fa-solid fa-book-open big"></i><span class="step-num">1</span><h3>Chọn món</h3><p>Lướt thực đơn, tuỳ chỉnh size - đá - đường - topping theo ý bạn.</p></div>
+        <div class="step"><i class="fa-solid fa-credit-card big"></i><span class="step-num">2</span><h3>Thanh toán</h3><p>Momo, ZaloPay, thẻ hoặc tiền mặt khi nhận — thoải mái chọn.</p></div>
+        <div class="step"><i class="fa-solid fa-mug-saucer big"></i><span class="step-num">3</span><h3>Nhận nước</h3><p>Ghé quán lấy nước chỉ 5 phút, hoặc ngồi nhà chờ ship đến tận cửa.</p></div>
+        <div class="step"><i class="fa-solid fa-star big"></i><span class="step-num">4</span><h3>Tích điểm</h3><p>Điểm tự động cộng vào tài khoản, đổi quà bất kỳ lúc nào.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Khách hàng nói gì -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Cảm nhận thật</span>
+        <h2>Khách hàng nói gì về chúng tôi?</h2>
+      </div>
+      <div class="review-grid">
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text">"Phin sữa đá ở đây đúng vị hồi nhỏ mình uống ở quê. Đặt trước 5 phút tới là có ngay, chưa bao giờ phải chờ."</p>
+          <div class="review-who">
+            <div class="review-avatar">N</div>
+            <div><b>Nguyễn Kim Ngân</b><small>Khách quen · Quận 1</small></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+          <p class="review-text">"Mình hay làm việc ở chi nhánh Thảo Điền — wifi khỏe, ổ cắm đầy đủ, nhân viên không làm phiền mà lúc cần thì có mặt ngay."</p>
+          <div class="review-who">
+            <div class="review-avatar">T</div>
+            <div><b>Trần Hữu Đạt</b><small>Freelancer · Bình Thạnh</small></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text">"Đặt bàn sinh nhật 10 người qua web, được chuẩn bị bàn trang trí sẵn và tặng cả voucher. Quá chu đáo!"</p>
+          <div class="review-who">
+            <div class="review-avatar">L</div>
+            <div><b>Lê Thùy Trang</b><small>Thành viên Kim cương · Thủ Đức</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Không gian quán -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">@coffeehome.vn</span>
+        <h2>Khoảnh khắc tại Coffee Home</h2>
+      </div>
+      <div class="gallery-strip" id="gallery-strip"></div>
+      <p class="text-center muted mt-2" style="font-size:.88rem"><i class="fa-brands fa-instagram" style="color:var(--c-accent);margin-right:6px"></i>Theo dõi Instagram để bắt ảnh mới mỗi ngày</p>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head-row">
+        <h2><i class="fa-solid fa-newspaper" style="color:var(--c-primary)"></i> Chuyện quanh ly cà phê</h2>
+        <a class="btn btn-outline btn-sm" href="/blog.html">Tất cả bài viết <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="grid-cards" id="blog-teaser"></div>
     </div>
   </section>
 
