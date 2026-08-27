@@ -15,6 +15,18 @@ from threading import Lock
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
 
+# ---------- Fix common DATABASE_URL issues (Neon, Render, etc.) ----------
+if DATABASE_URL:
+    # Render sometimes adds quotes or breaks query params
+    DATABASE_URL = DATABASE_URL.strip('"').strip("'")
+    # Fix missing = in query params like "?sslmode require" → "?sslmode=require"
+    DATABASE_URL = re.sub(r'([?&])(\w+) (\w+)', r'\1\2=\3', DATABASE_URL)
+    # Ensure sslmode=require is present for Neon
+    if 'sslmode=' not in DATABASE_URL:
+        sep = '&' if '?' in DATABASE_URL else '?'
+        DATABASE_URL += f'{sep}sslmode=require'
+    logging.getLogger(__name__).info(f"DATABASE_URL: host={DATABASE_URL.split('@')[-1].split('/')[0] if '@' in DATABASE_URL else '?'}")
+
 # ---------- PostgreSQL ----------
 
 if DATABASE_URL:
