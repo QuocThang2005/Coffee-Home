@@ -50,11 +50,19 @@ export default async function init() {
   const price = Math.round(p.basePrice * (1 - (p.discountPct || 0) / 100));
   const related = menu.products.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
 
+  const tags = p.tags || [];
+  const badges = [];
+  if (tags.includes('bestseller')) badges.push('<span class="badge badge-hot">BEST SELLER</span>');
+  if (tags.includes('new')) badges.push('<span class="badge badge-new">MỚI</span>');
+  if (p.discountPct > 0) badges.push(`<span class="badge badge-sale">-${p.discountPct}%</span>`);
+  else if (tags.includes('sale')) badges.push('<span class="badge badge-sale">SALE</span>');
+
   $('#product-detail').innerHTML = `
   <div style="display:grid;grid-template-columns:minmax(280px,460px) 1fr;gap:44px;align-items:start" class="product-layout">
     <div style="position:relative">
       <img src="${p.image}" alt="${escapeHtml(p.name)}"
            style="border-radius:18px;box-shadow:var(--shadow);aspect-ratio:1/1;object-fit:cover;background:var(--c-cream)">
+      ${badges.length ? `<div class="pc-badges">${badges.join('')}</div>` : ''}
     </div>
 
     <div>
