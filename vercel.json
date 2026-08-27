@@ -1,0 +1,46 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/pages/:page", "destination": "/pages/:page.html" },
+    { "source": "/auth/:page", "destination": "/auth/:page.html" },
+    { "source": "/admin/:page", "destination": "/admin/:page.html" },
+    { "source": "/debug/:page", "destination": "/debug/:page.html" },
+    { "source": "/admin", "destination": "/admin/admin.html" },
+    { "source": "/menu", "destination": "/pages/menu.html" },
+    { "source": "/login", "destination": "/auth/login.html" },
+    { "source": "/register", "destination": "/auth/register.html" },
+    { "source": "/checkout", "destination": "/pages/checkout.html" },
+    { "source": "/booking", "destination": "/pages/booking.html" },
+    { "source": "/contact", "destination": "/pages/contact.html" },
+    { "source": "/careers", "destination": "/pages/careers.html" },
+    { "source": "/cart", "destination": "/pages/cart.html" },
+    { "source": "/account", "destination": "/pages/account.html" },
+    { "source": "/about", "destination": "/pages/about.html" },
+    { "source": "/faq", "destination": "/pages/faq.html" },
+    { "source": "/guide", "destination": "/pages/guide.html" },
+    { "source": "/blog", "destination": "/pages/blog.html" },
+    { "source": "/product", "destination": "/pages/product.html" },
+    { "source": "/voucher", "destination": "/pages/voucher.html" },
+    { "source": "/wishlist", "destination": "/pages/wishlist.html" },
+    { "source": "/order-tracking", "destination": "/pages/order-tracking.html" },
+    { "source": "/partners", "destination": "/pages/partners.html" },
+    { "source": "/policy-shipping", "destination": "/pages/policy-shipping.html" },
+    { "source": "/policy-member", "destination": "/pages/policy-member.html" },
+    { "source": "/photo-check", "destination": "/pages/photo-check.html" },
+    { "source": "/blog-post", "destination": "/pages/blog-post.html" },
+    { "source": "/forgot-password", "destination": "/auth/forgot-password.html" },
+    { "source": "/reset-password", "destination": "/auth/reset-password.html" },
+    { "source": "/admin-login", "destination": "/admin/admin-login.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}
