@@ -1,70 +1,69 @@
-// Nhạc nền lo-fi nhẹ bằng WebAudio (không cần file mp3)
+// Nhạc nền từ YouTube — YouTube IFrame API, ẩn iframe
 import { $, toast } from '../core/utils.js';
 
-let ctx = null;
-let nodes = [];
+let player = null;
 let on = false;
+let ready = false;
+const YT_ID = 'v-92I1wtJV4';
 
-// hợp âm Am7 - Fmaj7 nhẹ nhàng, loop bằng scheduler đơn giản
-const CHORDS = [
-  [220.00, 261.63, 329.63], // A3 C4 E4
-  [174.61, 220.00, 261.63], // F3 A3 C4
-  [196.00, 246.94, 293.66], // G3 B3 D4
-  [164.81, 207.65, 246.94]  // E3 G#3 B3
-];
-
-function start() {
-  ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
-  const master = ctx.createGain();
-  master.gain.value = 0;
-  master.connect(ctx.destination);
-  master.gain.linearRampToValueAtTime(0.055, ctx.currentTime + 2);
-
-  let chordIdx = 0;
-  const playChord = () => {
-    if (!on) return;
-    CHORDS[chordIdx % CHORDS.length].forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const g = ctx.createGain();
-      osc.type = i === 0 ? 'triangle' : 'sine';
-      osc.frequency.value = freq;
-      osc.detune.value = (Math.random() * 8) - 4;
-      g.gain.value = 0.35 / (i + 1);
-      osc.connect(g).connect(master);
-      osc.start();
-      osc.stop(ctx.currentTime + 7.6);
-    });
-    chordIdx++;
-  };
-  playChord();
-  nodes.push(master, setInterval(playChord, 8000));
+function loadYT() {
+  if (window.YT && window.YT.Player) return Promise.resolve();
+  return new Promise((resolve) => {
+    const s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(s);
+    window.onYouTubeIframeAPIReady = () => resolve();
+  });
 }
 
-function stop() {
-  const [master, interval] = nodes;
-  clearInterval(interval);
-  if (master && ctx) {
-    master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8);
-    setTimeout(() => master.disconnect(), 900);
-  }
-  nodes = [];
+function createPlayer() {
+  const div = document.createElement('div');
+  div.id = 'yt-music-player';
+  div.style.cssText = 'position:fixed;bottom:-999px;left:-999px;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1';
+  document.body.appendChild(div);
+
+  player = new YT.Player('yt-music-player', {
+    videoId: YT_ID,
+    playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: YT_ID, volume: 30 },
+    events: {
+      onReady: () => { ready = true; },
+      onStateChange: (e) => {
+        if (e.data === YT.PlayerState.ENDED) player.seekTo(0, true);
+      }
+    }
+  });
 }
 
 export function initMusic() {
   const mount = () => {
-    const stack = document.querySelector('.fab-stack');
     const btn = $('#music-fab');
-    if (!stack || !btn || btn.dataset.ready) return;
+    if (!btn || btn.dataset.ready) return;
     btn.style.display = '';
     btn.innerHTML = '<i class="fa-solid fa-music"></i>';
     btn.title = 'Nhạc nền thư giãn';
     btn.dataset.ready = '1';
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       on = !on;
       btn.classList.toggle('on', on);
-      if (on) { start(); toast('Đã bật nhạc nền thư giãn ♪'); }
-      else { stop(); toast('Đã tắt nhạc nền'); }
+
+      if (on) {
+        if (!player) {
+          toast('Đang tải nhạc...', 'info');
+          await loadYT();
+          createPlayer();
+          await new Promise(r => setTimeout(r, 1500));
+        }
+        if (ready) {
+          player.unMute();
+          player.setVolume(30);
+          player.playVideo();
+          toast('Đã bật nhạc nền ♪');
+        }
+      } else {
+        if (player) { player.pauseVideo(); player.mute(); }
+        toast('Đã tắt nhạc nền');
+      }
     });
   };
 
