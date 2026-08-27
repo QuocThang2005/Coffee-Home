@@ -11,7 +11,7 @@ function rowHtml(it, i) {
     <td style="display:flex;align-items:center;gap:12px;min-width:220px">
       <img src="${it.image}" alt="" width="52" height="52" style="border-radius:9px">
       <div>
-        <a href="/product.html?id=${it.slug}"><strong>${escapeHtml(it.name)}</strong></a>
+        <a href="/pages/product.html?id=${it.slug}"><strong>${escapeHtml(it.name)}</strong></a>
         <div class="muted" style="font-size:.78rem">${escapeHtml(it.size)} · ${escapeHtml(it.ice)} đá · ${escapeHtml(it.sugar)}
           ${it.toppings?.length ? '<br>+' + it.toppings.map(t => escapeHtml(t.name)).join(', +') : ''}
         </div>

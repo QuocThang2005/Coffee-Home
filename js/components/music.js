@@ -1,5 +1,5 @@
 // Nhạc nền lo-fi nhẹ bằng WebAudio (không cần file mp3)
-import { toast } from '../core/utils.js';
+import { $, toast } from '../core/utils.js';
 
 let ctx = null;
 let nodes = [];

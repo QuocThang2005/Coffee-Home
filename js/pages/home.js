@@ -3,16 +3,16 @@
 import { $, $$, formatVND, escapeHtml, toast } from '../core/utils.js';
 import { getMenu, getBranches } from '../core/api.js';
 import { appliedVoucher } from '../core/store.js';
-import { initBannerSlider, renderGrid, bindGridActions } from '../components/products.js';
+import { renderGrid, bindGridActions } from '../components/products.js';
 import { POSTS } from './blog-data.js';
 
 const GALLERY = [
-  '/images/pexels-alexfu-1659037.jpg',
-  '/images/pexels-pixabay-459489.jpg',
-  '/images/pexels-pixabay-414605.jpg',
-  '/images/pexels-conojeghuo-111159.jpg',
-  '/images/pexels-fotios-photos-228183.jpg',
-  '/images/pexels-dutumong-2226091.jpg'
+  '/images/menu/gallery-1.jpg',
+  '/images/menu/gallery-2.jpg',
+  '/images/menu/gallery-3.jpg',
+  '/images/menu/gallery-4.jpg',
+  '/images/menu/gallery-5.jpg',
+  '/images/menu/gallery-6.jpg'
 ];
 
 function initCountUp() {
@@ -50,11 +50,9 @@ const DEAL_UNIT = {
 export default async function init() {
   const menu = await getMenu();
 
-  initBannerSlider('#home-hero', menu.banners);
-
   // chips danh mục -> menu.html?cat=
   $('#home-cats').innerHTML = menu.categories.map(c => `
-    <a class="chip" href="/menu.html?cat=${c.id}">
+    <a class="chip" href="/pages/menu.html?cat=${c.id}">
       <i class="fa-solid ${c.icon}"></i> ${escapeHtml(c.name)}
     </a>`).join('');
 
@@ -78,7 +76,9 @@ export default async function init() {
   renderGrid($('#new-row'), fresh);
   bindGridActions($('#new-row'));
 
-  // con số chạy lên khi lướt tới
+  // con số chạy lên khi lướt tới (đồng bộ "số món" với thực đơn thật)
+  const statMenu = $('#stat-menu');
+  if (statMenu) statMenu.dataset.count = String(menu.products.length);
   initCountUp();
 
   // chi nhánh
@@ -92,7 +92,7 @@ export default async function init() {
         <li class="mt-1"><i class="fa-solid fa-clock" style="color:var(--c-accent);margin-right:8px"></i>${escapeHtml(b.open)}</li>
         <li class="mt-1"><i class="fa-solid fa-phone" style="color:var(--c-accent);margin-right:8px"></i>${escapeHtml(b.phone)}</li>
       </ul>
-      <a href="/booking.html" class="btn btn-outline btn-sm mt-2">Đặt bàn ở đây</a>
+      <a href="/pages/booking.html" class="btn btn-outline btn-sm mt-2">Đặt bàn ở đây</a>
     </div>`).join('');
 
   // voucher nổi bật (3 mã đầu)
@@ -124,7 +124,7 @@ export default async function init() {
     if (useBtn) {
       appliedVoucher.set(menu.vouchers.find(v => v.code === useBtn.dataset.use));
       toast('Đã áp mã — chọn món nào!', 'success');
-      location.href = '/menu.html';
+      location.href = '/pages/menu.html';
     }
   });
 
@@ -143,7 +143,7 @@ export default async function init() {
         </div>
         <h3>${escapeHtml(p.title)}</h3>
         <p>${escapeHtml(p.excerpt)}</p>
-        <a class="read-more" href="/blog-post.html?id=${p.slug}">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></a>
+        <a class="read-more" href="/pages/blog-post.html?id=${p.slug}">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></a>
       </div>
     </article>`).join('');
 }

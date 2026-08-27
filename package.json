@@ -6,10 +6,14 @@
   "description": "Coffee Home - Web dat nuoc va dat ban quan ca phe (Vite MPA + FastAPI backend)",
   "scripts": {
     "dev": "vite",
+    "start": "node scripts/start-all.js",
     "build": "vite build && node scripts/postbuild.js",
     "preview": "vite preview"
   },
   "devDependencies": {
     "vite": "^5.4.11"
+  },
+  "dependencies": {
+    "ws": "^8.21.3"
   }
 }

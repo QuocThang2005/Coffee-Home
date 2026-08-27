@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -9,8 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/effects.css">
   <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body data-page="home">
@@ -24,9 +25,9 @@
   <section class="hero" id="home-hero"></section>
 
   <!-- Ưu đãi chạy chữ -->
-  <div style="background:var(--c-primary);color:#fff;padding:9px 0;font-size:.85rem;text-align:center;letter-spacing:.5px">
+  <div id="site-marquee" style="background:var(--c-primary);color:#fff;padding:9px 0;font-size:.85rem;text-align:center;letter-spacing:.5px">
     <i class="fa-solid fa-bolt" style="color:var(--c-accent)"></i>
-    Tuần này: giảm 15% Phin Sữa Đá · Freeship đơn từ 50k (mã FREESHIP) · Tích điểm x2 cuối tuần
+    <span id="marquee-text">Đang tải ưu đãi...</span>
   </div>
 
   <!-- Danh mục -->
@@ -77,7 +78,7 @@
     <div class="container">
       <div class="section-head-row">
         <h2><i class="fa-solid fa-fire" style="color:var(--c-danger)"></i> Bán chạy nhất quán</h2>
-        <a class="btn btn-outline btn-sm" href="/menu.html">Xem tất cả <i class="fa-solid fa-arrow-right"></i></a>
+        <a class="btn btn-outline btn-sm" href="/pages/menu.html">Xem tất cả <i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div class="grid-products" id="best-grid"></div>
     </div>
@@ -88,7 +89,7 @@
     <div class="container">
       <div class="section-head-row">
         <h2><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--c-accent)"></i> Món mới về hôm nay</h2>
-        <a class="btn btn-outline btn-sm" href="/menu.html">Toàn bộ thực đơn <i class="fa-solid fa-arrow-right"></i></a>
+        <a class="btn btn-outline btn-sm" href="/pages/menu.html">Toàn bộ thực đơn <i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div class="scroll-row" id="new-row"></div>
     </div>
@@ -97,7 +98,7 @@
   <!-- Câu chuyện -->
   <section class="section">
     <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center">
-      <img src="/images/pexels-chunhsien-shih-162803768-36238393.jpg" alt="Không gian Coffee Home" style="border-radius:18px;box-shadow:var(--shadow);width:100%;aspect-ratio:4/3;object-fit:cover">
+      <img src="/images/menu/story.jpg" alt="Không gian Coffee Home" style="border-radius:18px;box-shadow:var(--shadow);width:100%;aspect-ratio:4/3;object-fit:cover">
       <div>
         <span class="eyebrow" style="color:var(--c-accent);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem">Câu chuyện quán</span>
         <h2 style="font-size:1.9rem;margin:8px 0 16px">Từ căn nhà nhỏ đến 3 chi nhánh</h2>
@@ -108,7 +109,7 @@
           <li><i class="fa-solid fa-check" style="color:var(--c-success);margin-right:10px"></i>Rang mộc mỗi tuần, pha chế ngay khi bạn gọi</li>
           <li><i class="fa-solid fa-check" style="color:var(--c-success);margin-right:10px"></i>Không gian xanh - wifi miễn phí, chỗ học làm việc</li>
         </ul>
-        <a href="/about.html" class="btn btn-primary mt-3">Khám phá câu chuyện <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="/pages/about.html" class="btn btn-primary mt-3">Khám phá câu chuyện <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </div>
   </section>
@@ -117,7 +118,7 @@
   <section class="section" style="padding-top:0">
     <div class="container">
       <div class="stats-strip">
-        <div><div class="stat-num"><span data-count="18">0</span><b>+ món</b></div><p>Thức uống đặc sắc</p></div>
+        <div><div class="stat-num"><span data-count="18" id="stat-menu">0</span><b>+ món</b></div><p>Thức uống đặc sắc</p></div>
         <div><div class="stat-num"><span data-count="3">0</span><b> chi nhánh</b></div><p>Trải khắp TP.HCM</p></div>
         <div><div class="stat-num"><span data-count="12000">0</span><b>+</b></div><p>Khách hàng thân thiết</p></div>
         <div><div class="stat-num"><span data-count="4.9" data-decimals="1">0</span><b>/5 ★</b></div><p>Điểm hài lòng trung bình</p></div>
@@ -141,7 +142,7 @@
     <div class="container">
       <div class="section-head-row">
         <h2><i class="fa-solid fa-ticket" style="color:var(--c-success)"></i> Ưu đãi đang chạy</h2>
-        <a class="btn btn-outline btn-sm" href="/voucher.html">Tất cả voucher <i class="fa-solid fa-arrow-right"></i></a>
+        <a class="btn btn-outline btn-sm" href="/pages/voucher.html">Tất cả voucher <i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div id="deal-list" style="display:grid;gap:16px;max-width:860px;margin-inline:auto"></div>
     </div>
@@ -156,8 +157,8 @@
           <p style="opacity:.92">Đăng ký miễn phí — tích 1 điểm/10.000₫, voucher sinh nhật, ưu đãi độc quyền mỗi tháng.</p>
         </div>
         <div style="display:flex;gap:12px">
-          <a href="/register.html" class="btn btn-accent">Tham gia ngay</a>
-          <a href="/menu.html" class="btn btn-outline" style="border-color:#fff;color:#fff">Đặt nước trước</a>
+          <a href="/auth/register.html" class="btn btn-accent">Tham gia ngay</a>
+          <a href="/pages/menu.html" class="btn btn-outline" style="border-color:#fff;color:#fff">Đặt nước trước</a>
         </div>
       </div>
     </div>
@@ -232,7 +233,7 @@
     <div class="container">
       <div class="section-head-row">
         <h2><i class="fa-solid fa-newspaper" style="color:var(--c-primary)"></i> Chuyện quanh ly cà phê</h2>
-        <a class="btn btn-outline btn-sm" href="/blog.html">Tất cả bài viết <i class="fa-solid fa-arrow-right"></i></a>
+        <a class="btn btn-outline btn-sm" href="/pages/blog.html">Tất cả bài viết <i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div class="grid-cards" id="blog-teaser"></div>
     </div>

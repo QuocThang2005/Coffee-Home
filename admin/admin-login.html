@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <title>Đăng nhập quản trị — Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="admin-login" class="admin-login-body">
+
+<main id="main-content">
+  <section class="section">
+    <div class="container">
+      <div style="max-width:430px;margin-inline:auto;text-align:center;padding-top:6vh">
+        <img src="/images/logo.svg" alt="Logo Coffee Home" width="64" style="margin-inline:auto">
+        <h1 class="mt-2">Khu vực quản trị</h1>
+        <p class="muted">Chỉ dành cho nhân viên Coffee Home.</p>
+
+        <div class="panel mt-3" style="text-align:left">
+          <form id="al-form" novalidate>
+            <div class="form-group">
+              <label for="al-user">Tên đăng nhập</label>
+              <input class="input" type="text" id="al-user" placeholder="admin hoặc email" autocomplete="username">
+            </div>
+            <div class="form-group">
+              <label for="al-pass">Mật khẩu</label>
+              <input class="input" type="password" id="al-pass" autocomplete="current-password">
+            </div>
+            <p id="al-error" class="muted" style="color:#c0392b;font-size:.9rem;min-height:1.2em;margin:0"></p>
+            <button type="submit" class="btn btn-primary btn-block mt-2" id="al-submit">Đăng nhập quản trị</button>
+            <p class="form-hint text-center mt-2">Tài khoản mặc định: <b>admin</b> / <b>admin123</b></p>
+          </form>
+        </div>
+
+        <p class="muted mt-2" style="font-size:.85rem">
+          <span id="al-status"><i class="fa-solid fa-circle-notch fa-spin"></i> Đang kiểm tra kết nối backend…</span>
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module" src="/js/admin-main.js?v=20260825"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><title>Kiểm thử Admin E2E</title></head>
+<body>
+<pre id="out">bat dau...</pre>
+<script>
+(async () => {
+  const out = document.getElementById('out');
+  try {
+    const h = await fetch('/api/health').then(r => r.json());
+    out.textContent += '\nhealth: ' + JSON.stringify(h);
+
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'admin@coffeehome.vn', password: 'admin123' })
+    });
+    const login = await res.json();
+    if (!login.token) throw new Error('login that bai: ' + JSON.stringify(login));
+localStorage.setItem('ch_admin_token', login.token);
+localStorage.setItem('ch_admin_user', JSON.stringify(login.user));
+    out.textContent += '\nlogin OK, chuyen vao /admin.html ...';
+    setTimeout(() => location.replace('/admin/admin.html'), 300);
+  } catch (err) {
+    out.textContent += '\nLOI: ' + err.message;
+  }
+})();
+</script>
+</body>
+</html>

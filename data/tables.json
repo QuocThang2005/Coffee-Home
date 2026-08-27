@@ -1,0 +1,9 @@
+{
+  "tables": [
+    {"id": "T1", "token": "c8f2a1b9e4d7", "name": "Bàn 1", "seats": 2},
+    {"id": "T2", "token": "a3e5f7c2d9b1", "name": "Bàn 2", "seats": 4},
+    {"id": "T3", "token": "d9b4e8a2f6c3", "name": "Bàn 3", "seats": 4},
+    {"id": "T4", "token": "f1c7a5d2e9b8", "name": "Bàn 4", "seats": 6},
+    {"id": "T5", "token": "b6d3f8c1a4e7", "name": "Bàn VIP", "seats": 8}
+  ]
+}

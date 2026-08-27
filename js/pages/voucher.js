@@ -20,7 +20,7 @@ function cardHtml(v) {
       <div class="voucher-foot">
         <span class="voucher-code">${v.code}</span>
         <button class="btn btn-outline btn-sm" data-copy="${v.code}"><i class="fa-regular fa-copy"></i> Copy</button>
-        <a class="btn btn-primary btn-sm" href="/menu.html" data-use="${v.code}">Dùng ngay</a>
+        <a class="btn btn-primary btn-sm" href="/pages/menu.html" data-use="${v.code}">Dùng ngay</a>
       </div>
       <div class="voucher-exp mt-1"><i class="fa-regular fa-clock"></i> HSD: ${v.until}
         ${v.minOrder ? ` · Đơn tối thiểu ${formatVND(v.minOrder)}` : ''}</div>

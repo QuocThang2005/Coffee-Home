@@ -27,6 +27,10 @@ function write(key, value) {
 /* ---------------- Giỏ hàng ---------------- */
 // item: { id, slug, name, image, basePrice, unitPrice, qty, size, ice, sugar, toppings:[{id,name,price}] }
 
+// chữ ký một dòng món (món + cấu hình): dùng để nhận diện trùng khi gộp giỏ
+export const itemSig = (it) =>
+  JSON.stringify([it.id, it.size, it.ice, it.sugar, (it.toppings || []).map(t => t.id)]);
+
 export const cart = {
   get: () => read(K.cart, []),
   save(items) { write(K.cart, items); },
@@ -36,10 +40,7 @@ export const cart = {
   add(item, silent = false) {
     const items = this.get();
     // trùng món + đúng cấu hình thì cộng số lượng
-    const sig = JSON.stringify([item.id, item.size, item.ice, item.sugar, (item.toppings || []).map(t => t.id)]);
-    const found = items.find(it =>
-      JSON.stringify([it.id, it.size, it.ice, it.sugar, (it.toppings || []).map(t => t.id)]) === sig
-    );
+    const found = items.find(it => itemSig(it) === itemSig(item));
     if (found) found.qty += item.qty;
     else items.push(item);
     this.save(items);
@@ -68,6 +69,40 @@ export const cart = {
   }
 };
 
+/* ---------------- Giỏ hàng theo từng tài khoản ---------------- */
+// Đăng xuất: giỏ hiện tại được cất riêng cho user đó rồi xoá khỏi màn hình
+// -> người dùng sau không thấy giỏ của người trước.
+// Đăng nhập lại: giỏ đã cất được trả về (gộp với món khách thêm khi chưa đăng nhập).
+
+const savedCartKey = (u) =>
+  `ch_cart_saved_${encodeURIComponent(u?.id ?? u?.email ?? 'unknown')}`;
+
+export function onUserLogin(u) {
+  if (!u) return;
+  const key = savedCartKey(u);
+  const saved = read(key, []);
+  if (!saved.length) return;
+  const items = cart.get();
+  for (const it of saved) {
+    const found = items.find(x => itemSig(x) === itemSig(it));
+    if (found) found.qty = Math.min(99, found.qty + it.qty);
+    else items.push(it);
+  }
+  cart.save(items);
+  localStorage.removeItem(key); // đã sống trong giỏ hiện tại, sẽ cất lại lúc đăng xuất
+}
+
+export function onUserLogout() {
+  const u = user.get(); // phải đọc TRƯỚC khi clear
+  if (u) {
+    const items = cart.get();
+    if (items.length) localStorage.setItem(savedCartKey(u), JSON.stringify(items));
+    else localStorage.removeItem(savedCartKey(u));
+  }
+  cart.clear();
+  appliedVoucher.clear();
+}
+
 /* ---------------- Wishlist ---------------- */
 
 export const wishlist = {
@@ -85,6 +120,17 @@ export const wishlist = {
     write(K.wishlist, list);
     window.dispatchEvent(new CustomEvent('wishlist:change'));
   }
+};
+
+/* ---------------- Token phiên đăng nhập (backend) ---------------- */
+
+export const session = {
+  getToken: () => localStorage.getItem('ch_token') || '',
+  setToken(t) {
+    if (t) localStorage.setItem('ch_token', t);
+    else localStorage.removeItem('ch_token');
+  },
+  clear() { this.setToken(null); }
 };
 
 /* ---------------- User ---------------- */
@@ -123,7 +169,17 @@ export const bookings = {
   }
 };
 
-/* ---------------- Voucher đã áp dụng (truyền cart -> checkout) ---------------- */
+/* ---------------- Session bàn (QR table order) ---------------- */
+
+export const tableSession = {
+  get() {
+    try { return JSON.parse(sessionStorage.getItem('ch_table')); }
+    catch { return null; }
+  },
+  set(t) { sessionStorage.setItem('ch_table', JSON.stringify(t)); },
+  clear() { sessionStorage.removeItem('ch_table'); },
+  isTableOrder() { return !!this.get(); },
+};
 
 export const appliedVoucher = {
   get: () => read('ch_voucher', null),

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><title>Kiểm thử chặn thanh toán</title></head>
+<body>
+<pre id="out">bat dau...</pre>
+<script>
+(async () => {
+  const out = document.getElementById('out');
+  try {
+    const menu = await fetch('/api/drinks').then(r => r.json());
+    const p = menu.products[0];
+    localStorage.setItem('ch_user', ''); // chắc chắn CHƯA đăng nhập
+    localStorage.removeItem('ch_token');
+    localStorage.setItem('ch_cart', JSON.stringify([{
+      id: p.id, slug: p.slug, name: p.name, image: p.image,
+      basePrice: p.basePrice, unitPrice: p.basePrice,
+      qty: 1, size: 'M', ice: '70', sugar: '100', toppings: []
+    }]));
+    out.textContent += '\nDa them vao gio: ' + p.name + ' -> chuyen checkout...';
+    setTimeout(() => location.replace('/pages/checkout.html'), 300);
+  } catch (err) {
+    out.textContent += '\nLOI: ' + err.message;
+  }
+})();
+</script>
+</body>
+</html>

@@ -30,7 +30,7 @@ export default function init() {
           <span><i class="fa-regular fa-calendar"></i>${new Date(p.date).toLocaleDateString('vi-VN')}</span>
         </div>
         <h3>${escapeHtml(p.title)}</h3>
-        <a class="read-more" href="/blog-post.html?id=${p.slug}">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></a>
+        <a class="read-more" href="/pages/blog-post.html?id=${p.slug}">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></a>
       </div>
     </article>`).join('');
 }

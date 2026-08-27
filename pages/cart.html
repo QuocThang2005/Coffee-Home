@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giỏ hàng | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/effects.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="cart">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Giỏ hàng của bạn</h1>
+      <nav class="breadcrumb"><a href="/index.html">Trang chủ</a><span>/</span><span>Giỏ hàng</span></nav>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div id="cart-area">
+        <div class="checkout-grid">
+          <div>
+            <div class="table-wrap" id="cart-table-wrap"></div>
+            <a href="/pages/menu.html" class="btn btn-outline btn-sm mt-2"><i class="fa-solid fa-arrow-left"></i> Tiếp tục chọn món</a>
+          </div>
+
+          <aside class="summary-box">
+            <h3>Tóm tắt đơn hàng</h3>
+            <div class="form-group">
+              <label for="voucher-code">Mã giảm giá</label>
+              <div style="display:flex;gap:8px">
+                <input class="input" id="voucher-code" placeholder="VD: CHAO10">
+                <button class="btn btn-primary" id="apply-voucher" type="button">Áp dụng</button>
+              </div>
+              <p class="form-hint" id="voucher-hint"></p>
+            </div>
+            <div class="sum-row"><span>Tạm tính</span><span id="cart-subtotal">0₫</span></div>
+            <div class="sum-row discount"><span>Giảm giá</span><span id="cart-discount">0₫</span></div>
+            <div class="sum-row total"><span>Tổng cộng</span><span id="cart-total">0₫</span></div>
+            <a href="/pages/checkout.html" class="btn btn-primary btn-block mt-2" id="btn-to-checkout">Thanh toán →</a>
+          </aside>
+        </div>
+      </div>
+
+      <div class="empty-state" id="cart-empty" hidden>
+        <i class="fa-solid fa-basket-shopping"></i>
+        <h3>Giỏ hàng trống trơn</h3>
+        <p>Thêm vài món ngon từ thực đơn nhé!</p>
+        <a href="/pages/menu.html" class="btn btn-primary mt-2">Xem thực đơn</a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 // Renderer sản phẩm dùng chung: card, grid, slider banner
-import { $, formatVND, escapeHtml, starHtml } from '../core/utils.js';
+import { $, $$, formatVND, escapeHtml, starHtml } from '../core/utils.js';
 import { wishlist } from '../core/store.js';
 
 export function productCard(p) {
@@ -13,13 +13,13 @@ export function productCard(p) {
   return `
   <article class="product-card" data-id="${p.id}">
     <div class="pc-img">
-      <a href="/product.html?id=${p.slug}"><img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy"></a>
+      <a href="/pages/product.html?id=${p.slug}"><img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy"></a>
       <div class="pc-tags">${tags.join('')}</div>
       <button class="pc-wish ${wished ? 'on' : ''}" data-wish="${p.id}" data-name="${escapeHtml(p.name)}"
               aria-label="Yêu thích"><i class="fa-${wished ? 'solid' : 'regular'} fa-heart"></i></button>
     </div>
     <div class="pc-body">
-      <a href="/product.html?id=${p.slug}" style="display:contents">
+      <a href="/pages/product.html?id=${p.slug}" style="display:contents">
         <h3 class="pc-name">${escapeHtml(p.name)}</h3>
       </a>
       <div class="pc-rating">${starHtml(p.rating)}<span>${p.rating} · Đã bán ${p.sold}</span></div>
@@ -101,19 +101,21 @@ export function initBannerSlider(rootSel, banners) {
     </div>`;
 
   const track = $('.hero-track', root);
+  const slides = $$('.hero-slide', root);
   const dots = $$('.hero-dots button', root);
   let idx = 0, timer;
 
   const go = (i) => {
     idx = (i + banners.length) % banners.length;
     track.style.transform = `translateX(-${idx * 100}%)`;
+    // bật class .on cho slide hiện tại -> nội dung có hiệu ứng trượt vào
+    slides.forEach((s, j) => s.classList.toggle('on', j === idx));
     dots.forEach((d, j) => d.classList.toggle('on', j === idx));
   };
   const play = () => { timer = setInterval(() => go(idx + 1), 5000); };
   const stop = () => clearInterval(timer);
 
   dots.forEach(d => d.addEventListener('click', () => { stop(); go(Number(d.dataset.slide)); play(); }));
-  root.addEventListener('mouseenter', stop);
-  root.addEventListener('mouseleave', play);
+  go(0);
   play();
 }

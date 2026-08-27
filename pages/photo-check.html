@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Kiểm tra ảnh — Coffee Home (temp)</title>
+<style>
+  body { font-family: system-ui; margin: 24px; background: #faf6f2; }
+  h1 { font-size: 1.3rem; } h2 { font-size: 1rem; margin-top: 28px; color: #7a5c44; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+  .card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+  .card p { font-size: .82rem; padding: 8px 10px; margin: 0; font-weight: 600; }
+  .card small { display: block; font-weight: 400; color: #999; }
+  .wide img { aspect-ratio: 16/7; }
+</style>
+</head>
+<body>
+<h1>🔍 Kiểm tra gán ảnh — trang này chỉ để xem, không commit</h1>
+<p>Món nào sai ảnh → báo tên món, mình đổi trong một nốt nhạc.</p>
+<h2>18 món menu</h2><div class="grid" id="products"></div>
+<h2>3 banner slider</h2><div class="grid" id="banners"></div>
+<h2>Blog + story + auth</h2><div class="grid" id="misc"></div>
+<script>
+fetch('/data/products.json').then(r => r.json()).then(d => {
+  document.getElementById('products').innerHTML = d.products.map(p =>
+    `<div class="card"><img src="${p.image}" loading="lazy"><p>${p.name}<small>${p.image.split('/').pop()}</small></p></div>`).join('');
+  document.getElementById('banners').innerHTML = d.banners.map(b =>
+    `<div class="card wide"><img src="${b.image}" loading="lazy"><p>Banner<small>${b.image.split('/').pop()}</small></p></div>`).join('');
+  const misc = ['blog-1','blog-2','blog-3','blog-4','blog-5','story','auth-side','gallery-1','gallery-2','gallery-3','gallery-4','gallery-5','gallery-6'];
+  document.getElementById('misc').innerHTML = misc.map(n =>
+    `<div class="card"><img src="/images/menu/${n}.jpg" loading="lazy"><p>${n}<small>/images/menu/${n}.jpg</small></p></div>`).join('');
+});
+</script>
+</body>
+</html>

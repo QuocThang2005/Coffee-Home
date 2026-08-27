@@ -22,7 +22,7 @@ function render(q) {
     return;
   }
   box.innerHTML = results.map(p => `
-    <a class="sr-item" href="/product.html?id=${p.slug}">
+    <a class="sr-item" href="/pages/product.html?id=${p.slug}">
       <img src="${p.image}" alt="">
       <div><strong>${escapeHtml(p.name)}</strong><span class="sr-cat">${escapeHtml(p.desc)}</span></div>
       <span class="sr-price">${formatVND(p.basePrice)}</span>

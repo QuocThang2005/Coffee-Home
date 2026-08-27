@@ -1,7 +1,7 @@
 // Chi tiết món: tùy chọn size/đá/đường/topping + thêm giỏ
 import { $, $$, formatVND, escapeHtml, getParam, starHtml, toast } from '../core/utils.js';
-import { getMenu, priceOf } from '../core/api.js';
-import { cart, wishlist } from '../core/store.js';
+import { getMenu, priceOf, getVouchers, getProductReviews, submitReview } from '../core/api.js';
+import { cart, wishlist, appliedVoucher } from '../core/store.js';
 import { productCard, bindGridActions } from '../components/products.js';
 
 let p = null;
@@ -77,7 +77,19 @@ export default async function init() {
       <div class="form-group"><label>Đường</label><div class="opt-pills" id="sugar-pills"></div></div>
       <div class="form-group"><label>Topping</label><div id="toppings-checks" style="display:flex;flex-wrap:wrap;gap:9px"></div></div>
 
-      <div style="display:flex;gap:14px;align-items:center;margin-top:22px;flex-wrap:wrap">
+      <div class="voucher-input-row" id="voucher-row" style="display:flex;gap:8px;align-items:center;margin-top:14px">
+        <div style="flex:1;position:relative">
+          <input type="text" id="voucher-input" class="input" placeholder="Nhập mã giảm giá…"
+                 style="padding:10px 14px;padding-right:38px;text-transform:uppercase;font-weight:600;letter-spacing:1px">
+          <i class="fa-solid fa-ticket" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--c-muted)"></i>
+        </div>
+        <button type="button" class="btn btn-outline" id="btn-apply-voucher" style="white-space:nowrap;padding:10px 16px">
+          <i class="fa-solid fa-check"></i> Áp dụng
+        </button>
+      </div>
+      <div id="voucher-msg" style="font-size:.82rem;margin-top:6px;min-height:20px"></div>
+
+      <div class="action-row" style="display:flex;gap:14px;align-items:center;margin-top:22px;flex-wrap:wrap">
         <div class="qty-stepper">
           <button type="button" data-q="-1" aria-label="Giảm"><i class="fa-solid fa-minus"></i></button>
           <input type="number" id="qty-input" value="1" min="1" max="99">
@@ -95,10 +107,19 @@ export default async function init() {
 
   <section class="mt-4">
     <h3 class="mb-2">Khách nói gì về "${escapeHtml(p.name)}"</h3>
-    <div class="grid-cards">
-      <div class="info-card"><strong>Minh Anh ⭐⭐⭐⭐⭐</strong><p>"Đúng vị quán hay uống, đặt trước 15 phút tới là nhận liền, tiện hẳn!"</p></div>
-      <div class="info-card"><strong>Thanh Tùng ⭐⭐⭐⭐⭐</strong><p>"Đá đường chuẩn gu, topping nhiều. Sẽ gọi lại thường xuyên."</p></div>
-      <div class="info-card"><strong>Hải Yến ⭐⭐⭐⭐</strong><p>"Đóng gói cẩn thận, giao nhanh. Mong có thêm size XXL 😄"</p></div>
+    <div id="reviews-section"><p class="muted">Đang tải đánh giá...</p></div>
+
+    <div id="review-form-box" class="info-card" style="margin-top:18px;display:none">
+      <h4 class="mb-1">Viết đánh giá</h4>
+      <div id="review-stars" class="review-stars-input" style="font-size:1.5rem;cursor:pointer;display:flex;gap:4px;margin-bottom:8px">
+        ${[1,2,3,4,5].map(i => `<i class="fa-regular fa-star" data-val="${i}"></i>`).join('')}
+      </div>
+      <input type="text" id="review-title" class="input" placeholder="Tiêu đề (tùy chọn)" maxlength="100" style="margin-bottom:8px">
+      <textarea id="review-message" class="input" rows="3" placeholder="Chia sẻ cảm nhận của bạn..." maxlength="2000" style="resize:vertical"></textarea>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:10px">
+        <button class="btn btn-accent" id="btn-submit-review"><i class="fa-solid fa-paper-plane"></i> Gửi đánh giá</button>
+        <span id="review-msg" style="font-size:.82rem"></span>
+      </div>
     </div>
   </section>
 
@@ -123,6 +144,52 @@ export default async function init() {
     refresh();
   });
 
+  // voucher
+  const vouchers = await getVouchers();
+  const voucherMsg = $('#voucher-msg');
+  const voucherInput = $('#voucher-input');
+
+  // hiển thị voucher đang áp dụng (nếu có từ trang khác)
+  const prevVoucher = appliedVoucher.get();
+  if (prevVoucher) {
+    voucherInput.value = prevVoucher.code;
+    voucherMsg.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--c-success)"></i> Đã áp mã <strong>${prevVoucher.code}</strong>`;
+  }
+
+  $('#btn-apply-voucher').addEventListener('click', () => {
+    const code = voucherInput.value.trim().toUpperCase();
+    if (!code) {
+      voucherMsg.innerHTML = `<span style="color:var(--c-danger)">Nhập mã giảm giá trước</span>`;
+      return;
+    }
+    const found = vouchers.find(v => v.code.toUpperCase() === code);
+    if (!found) {
+      voucherMsg.innerHTML = `<span style="color:var(--c-danger)"><i class="fa-solid fa-circle-xmark"></i> Mã "${code}" không tồn tại</span>`;
+      appliedVoucher.clear();
+      return;
+    }
+    // kiểm tra hạn
+    if (found.until) {
+      const until = found.until.split('/').reverse().join('-');
+      if (new Date() > new Date(until)) {
+        voucherMsg.innerHTML = `<span style="color:var(--c-danger)"><i class="fa-solid fa-circle-xmark"></i> Mã "${code}" đã hết hạn</span>`;
+        appliedVoucher.clear();
+        return;
+      }
+    }
+    appliedVoucher.set(found);
+    const desc = found.type === 'percent' ? `Giảm ${found.value}%`
+      : found.type === 'fixed' ? `Giảm ${formatVND(found.value)}`
+      : found.type === 'freeship' ? 'Miễn phí ship' : 'Tặng món';
+    voucherMsg.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--c-success)"></i> <strong>${found.code}</strong> — ${desc}${found.minOrder ? ` (đơn tối thiểu ${formatVND(found.minOrder)})` : ''}`;
+    toast(`Đã áp mã ${found.code}`, 'success');
+  });
+
+  // enter cũng áp dụng
+  voucherInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); $('#btn-apply-voucher').click(); }
+  });
+
   // qty
   $$('[data-q]').forEach(btn => btn.addEventListener('click', () => {
     const input = $('#qty-input');
@@ -143,7 +210,7 @@ export default async function init() {
     };
   };
   $('#add-cart').addEventListener('click', () => cart.add(buildItem()));
-  $('#buy-now').addEventListener('click', () => { cart.add(buildItem(), true); location.href = '/checkout.html'; });
+  $('#buy-now').addEventListener('click', () => { cart.add(buildItem(), true); location.href = '/pages/checkout.html'; });
 
   $('#wish-btn').addEventListener('click', () => {
     wishlist.toggle(p.id, p.name);
@@ -160,4 +227,88 @@ export default async function init() {
   }
 
   refresh();
+
+  // ---- Reviews ----
+  const REV_SEC = $('#reviews-section');
+  const FORM_BOX = $('#review-form-box');
+  let selectedRating = 0;
+
+  async function loadReviews() {
+    try {
+      const res = await getProductReviews(p.id);
+      const reviews = res.reviews || [];
+      if (!reviews.length) {
+        REV_SEC.innerHTML = '<p class="muted">Chưa có đánh giá nào cho sản phẩm này.</p>';
+      } else {
+        const avgHtml = res.totalReviews
+          ? `<div class="pc-rating mb-2" style="font-size:.9rem">${starHtml(res.avgRating)} <span>${res.avgRating} · ${res.totalReviews} đánh giá</span></div>`
+          : '';
+        REV_SEC.innerHTML = avgHtml + '<div class="grid-cards">' + reviews.map(r => {
+          const stars = '⭐'.repeat(r.rating);
+          const date = r.created_at ? new Date(r.created_at).toLocaleDateString('vi-VN') : '';
+          return `<div class="info-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+              <strong>${escapeHtml(r.user_name || 'Khách')} ${stars}</strong>
+              <span class="muted" style="font-size:.75rem">${date}</span>
+            </div>
+            ${r.title ? `<div style="font-weight:600;margin-bottom:2px">${escapeHtml(r.title)}</div>` : ''}
+            <p style="margin:0">"${escapeHtml(r.message)}"</p>
+          </div>`;
+        }).join('') + '</div>';
+      }
+    } catch {
+      REV_SEC.innerHTML = '<p class="muted">Không thể tải đánh giá.</p>';
+    }
+  }
+  loadReviews();
+
+  const authT = localStorage.getItem('ch_token');
+  if (authT) {
+    FORM_BOX.style.display = 'block';
+
+    const stars = $$('#review-stars i');
+    stars.forEach(icon => {
+      icon.addEventListener('click', () => {
+        selectedRating = Number(icon.dataset.val);
+        stars.forEach(s => {
+          s.className = Number(s.dataset.val) <= selectedRating ? 'fa-solid fa-star' : 'fa-regular fa-star';
+        });
+      });
+      icon.addEventListener('mouseenter', () => {
+        const v = Number(icon.dataset.val);
+        stars.forEach(s => { s.style.color = Number(s.dataset.val) <= v ? '#f59e0b' : ''; });
+      });
+      icon.addEventListener('mouseleave', () => {
+        stars.forEach(s => { s.style.color = ''; });
+      });
+    });
+
+    $('#btn-submit-review').addEventListener('click', async () => {
+      if (!selectedRating) { toast('Chọn số sao trước', 'warn'); return; }
+      const message = $('#review-message').value.trim();
+      if (message.length < 5) { toast('Nhận xét tối thiểu 5 ký tự', 'warn'); return; }
+      const btn = $('#btn-submit-review');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+      try {
+        await submitReview({
+          productId: p.id,
+          rating: selectedRating,
+          title: $('#review-title').value.trim(),
+          message
+        });
+        toast('Gửi đánh giá thành công!', 'success');
+        $('#review-message').value = '';
+        $('#review-title').value = '';
+        selectedRating = 0;
+        stars.forEach(s => { s.className = 'fa-regular fa-star'; });
+        loadReviews();
+      } catch (err) {
+        toast(err.message || 'Gửi thất bại', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Gửi đánh giá';
+      }
+    });
+  }
 }

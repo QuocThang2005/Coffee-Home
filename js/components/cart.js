@@ -35,7 +35,7 @@ export function renderCart() {
         <i class="fa-solid fa-basket-shopping"></i>
         <h3>Giỏ hàng đang trống</h3>
         <p>Ghé thực đơn chọn vài món ngon nhé!</p>
-        <a href="/menu.html" class="btn btn-primary mt-2">Xem thực đơn</a>
+        <a href="/pages/menu.html" class="btn btn-primary mt-2">Xem thực đơn</a>
       </div>`;
   } else {
     wrap.innerHTML = items.map(itemHtml).join('');
@@ -51,6 +51,8 @@ export function toggleCart(open) {
   renderCart();
   drawer.classList.toggle('open', open);
   overlay.classList.toggle('show', open);
+  const navOpen = document.getElementById('mobile-nav')?.classList.contains('open');
+  document.body.style.overflow = (open || navOpen) ? 'hidden' : '';
 }
 
 export function openCart() { toggleCart(true); }
@@ -66,8 +68,8 @@ export function initCartDrawer() {
       <div class="cd-items"></div>
       <div class="cd-foot">
         <div class="cd-total"><span>Tạm tính</span><span id="cd-total">0₫</span></div>
-        <a href="/cart.html" class="btn btn-outline btn-block mb-2">Xem giỏ hàng</a>
-        <a href="/checkout.html" class="btn btn-primary btn-block">Thanh toán</a>
+        <a href="/pages/cart.html" class="btn btn-outline btn-block mb-2">Xem giỏ hàng</a>
+        <a href="/pages/checkout.html" class="btn btn-primary btn-block">Thanh toán</a>
       </div>
     </aside>
     <div class="overlay" id="cart-overlay"></div>`);

@@ -1,0 +1,412 @@
+/* ============================================================
+   EFFECTS.CSS — lớp hiệu ứng dùng chung toàn site Coffee Home
+   Nguyên tắc: chỉ dùng transform/opacity (GPU), tôn trọng
+   prefers-reduced-motion, không phá layout sẵn có.
+   ============================================================ */
+
+:root {
+  --fx-ease: cubic-bezier(.22, .61, .36, 1);
+  --fx-ease-back: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* ---------- 1. SCROLL REVEAL ---------- */
+/* JS tự gắn class .rv + biến --d (delay) cho các khối, khi lướt tới thì thêm .rv-in */
+.rv {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity .7s var(--fx-ease) var(--d, 0s),
+    transform .7s var(--fx-ease) var(--d, 0s);
+  will-change: opacity, transform;
+}
+.rv.rv-left  { transform: translateX(-34px); }
+.rv.rv-right { transform: translateX(34px); }
+.rv.rv-zoom  { transform: scale(.92); }
+.rv-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- 2. THẺ SẢN PHẨM ---------- */
+.product-card {
+  transition:
+    transform .45s var(--fx-ease),
+    box-shadow .45s var(--fx-ease);
+}
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 44px -14px rgba(60, 35, 20, .28);
+}
+.product-card .pc-img img {
+  transition: transform .7s var(--fx-ease);
+}
+.product-card:hover .pc-img img {
+  transform: scale(1.09) rotate(.6deg);
+}
+/* vệt sáng quét qua ảnh khi hover */
+.product-card .pc-img { position: relative; overflow: hidden; }
+.product-card .pc-img::after {
+  content: "";
+  position: absolute;
+  inset: -60% auto -60% -70%;
+  width: 55%;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,.5), transparent);
+  transform: skewX(-18deg) translateX(-140%);
+  pointer-events: none;
+}
+.product-card:hover .pc-img::after {
+  transition: transform .9s ease;
+  transform: skewX(-18deg) translateX(420%);
+}
+/* nút "+" nhún nhẹ */
+.pc-add {
+  transition: transform .3s var(--fx-ease-back), background .3s;
+}
+.product-card:hover .pc-add {
+  transform: scale(1.12);
+}
+.pc-add:active { transform: scale(.92); }
+.badge { letter-spacing: .5px; }
+.badge-hot, .badge-new, .badge-sale {
+  animation: badge-float 2.6s ease-in-out infinite;
+}
+@keyframes badge-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* ---------- 3. THẺ THÔNG TIN / BƯỚC / ĐÁNH GIÁ ---------- */
+.info-card {
+  transition: transform .4s var(--fx-ease), box-shadow .4s var(--fx-ease),
+              border-color .4s;
+}
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px -12px rgba(60, 35, 20, .22);
+}
+.ic-icon {
+  transition: transform .45s var(--fx-ease-back), background .3s;
+}
+.info-card:hover .ic-icon {
+  transform: rotate(-8deg) scale(1.12);
+}
+.step {
+  position: relative;
+  transition: transform .4s var(--fx-ease);
+}
+.step:hover { transform: translateY(-6px); }
+.step-num {
+  transition: transform .45s var(--fx-ease-back);
+}
+.step:hover .step-num {
+  transform: scale(1.25) rotate(-10deg);
+}
+.review-card {
+  transition: transform .4s var(--fx-ease), box-shadow .4s var(--fx-ease);
+}
+.review-card:hover {
+  transform: translateY(-6px) rotate(-.4deg);
+  box-shadow: 0 18px 36px -12px rgba(60, 35, 20, .2);
+}
+.review-stars i {
+  animation: star-twinkle 1.8s ease-in-out infinite;
+}
+.review-stars i:nth-child(2n) { animation-delay: .3s; }
+.review-stars i:nth-child(3n) { animation-delay: .6s; }
+@keyframes star-twinkle {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .45; }
+}
+
+/* ---------- 4. CHIP & NÚT ---------- */
+.chip {
+  transition: transform .3s var(--fx-ease-back), box-shadow .3s,
+              background .3s, color .3s;
+}
+.chip:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 16px -6px rgba(60, 35, 20, .25);
+}
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s var(--fx-ease), box-shadow .3s, filter .3s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -8px rgba(40, 22, 12, .35);
+  filter: brightness(1.05);
+}
+.btn:active { transform: translateY(0) scale(.97); }
+/* sóng nước khi bấm (JS gắn .btn-ripple tại điểm chạm) */
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .55);
+  transform: scale(0);
+  animation: ripple .55s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes ripple {
+  to { transform: scale(3.2); opacity: 0; }
+}
+
+/* ---------- 5. HERO SLIDER ---------- */
+.hero { overflow: hidden; }
+.hero-slide {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+/* Ken Burns: ảnh phóng chậm liên tục */
+.hero-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  background-size: cover;
+  background-position: center;
+  animation: kenburns 9s var(--fx-ease) forwards;
+  z-index: 0;
+}
+.hero-slide:not(:first-child)::before { animation: none; }
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.09); }
+}
+.hero-content { position: relative; z-index: 1; }
+/* nội dung trượt vào khi slide được bật class .on (do slider JS) */
+.hero-slide .hero-content > * {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.hero-slide.on .hero-content > * {
+  animation: hero-rise .8s var(--fx-ease) forwards;
+}
+.hero-slide.on .hero-content > :nth-child(2) { animation-delay: .15s; }
+.hero-slide.on .hero-content > :nth-child(3) { animation-delay: .3s; }
+@keyframes hero-rise {
+  to { opacity: 1; transform: none; }
+}
+/* hạt cà phê bay lơ lửng trong hero (JS tạo .bean) */
+.bean {
+  position: absolute;
+  border-radius: 50% 46% 52% 48%;
+  background: radial-gradient(circle at 32% 30%, #a9744f, #4b2e1e 62%);
+  opacity: .5;
+  z-index: 1;
+  pointer-events: none;
+  animation: bean-drift linear infinite;
+}
+.bean::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 8%; bottom: 8%;
+  width: 8%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(0,0,0,.28);
+}
+@keyframes bean-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  50%  { transform: translate(26px, -30px) rotate(160deg); }
+  100% { transform: translate(-14px, 12px) rotate(330deg); }
+}
+.hero-dots button {
+  transition: transform .3s var(--fx-ease-back), background .3s;
+}
+.hero-dots button.on { transform: scale(1.35); }
+
+/* ---------- 6. MARQUEE ƯU ĐÃI ---------- */
+.fx-marquee {
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  user-select: none;
+}
+.fx-marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 54px;
+  padding-right: 54px;
+  white-space: nowrap;
+  animation: marquee 22s linear infinite;
+}
+.fx-marquee:hover .fx-marquee-track { animation-play-state: paused; }
+@keyframes marquee {
+  to { transform: translateX(-100%); }
+}
+
+/* ---------- 7. STATS STRIP ---------- */
+.stats-strip { position: relative; overflow: hidden; }
+.stats-strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(214, 164, 106, .14) 46%,
+    transparent 62%
+  );
+  transform: translateX(-100%);
+  animation: stat-sheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes stat-sheen {
+  0%, 55%  { transform: translateX(-100%); }
+  85%, 100%{ transform: translateX(100%); }
+}
+.stat-num [data-count] { font-variant-numeric: tabular-nums; }
+
+/* ---------- 8. GALLERY ---------- */
+.gallery-strip img {
+  transition: transform .5s var(--fx-ease), box-shadow .5s, filter .5s;
+  filter: saturate(.88);
+}
+.gallery-strip img:hover {
+  transform: scale(1.06) rotate(-1deg);
+  filter: saturate(1.15);
+  box-shadow: 0 16px 30px -10px rgba(60, 35, 20, .35);
+  z-index: 2;
+  position: relative;
+}
+
+/* ---------- 9. POST CARD ---------- */
+.post-card {
+  transition: transform .4s var(--fx-ease), box-shadow .4s var(--fx-ease);
+}
+.post-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 38px -12px rgba(60, 35, 20, .24);
+}
+.post-card .pc-cover {
+  transition: transform .65s var(--fx-ease);
+}
+.post-card:hover .pc-cover { transform: scale(1.07); }
+.read-more i {
+  transition: transform .3s var(--fx-ease);
+}
+.read-more:hover i { transform: translateX(5px); }
+
+/* ---------- 10. VOUCHER CARD ---------- */
+.voucher-card {
+  transition: transform .4s var(--fx-ease), box-shadow .4s;
+}
+.voucher-card:hover {
+  transform: translateY(-4px) scale(1.008);
+  box-shadow: 0 18px 34px -12px rgba(60, 35, 20, .22);
+}
+.voucher-code { cursor: pointer; }
+
+/* ---------- 11. TOAST HOẠT ĐỘNG "LIVE" ---------- */
+#live-toast {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  color: #3d2b1f;
+  border-radius: 14px;
+  padding: 11px 16px 11px 11px;
+  box-shadow: 0 14px 34px -8px rgba(30, 16, 8, .35);
+  font-size: .87rem;
+  max-width: min(340px, calc(100vw - 36px));
+  transform: translateY(140%);
+  opacity: 0;
+  transition: transform .55s var(--fx-ease-back), opacity .4s;
+}
+#live-toast.show {
+  transform: none;
+  opacity: 1;
+}
+#live-toast img {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+#live-toast b { display: block; font-size: .86rem; }
+#live-toast small { color: #8a7566; }
+#live-toast .lt-icon {
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  background: #f3ece5;
+  color: var(--c-accent, #b07d4f);
+  display: grid;
+  place-items: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+
+/* ---------- 12. NÚT LÊN ĐẦU TRANG ---------- */
+#to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--c-primary, #4b2e1e);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -8px rgba(30, 16, 8, .45);
+  opacity: 0;
+  transform: translateY(16px) scale(.85);
+  pointer-events: none;
+  transition: opacity .35s, transform .35s var(--fx-ease-back),
+              background .3s;
+}
+#to-top.show {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+#to-top:hover { background: var(--c-primary-dark, #33201a); }
+#to-top:active { transform: scale(.9); }
+
+/* ---------- 13. HEADER + CUỘN ---------- */
+#header .header, header.header, .site-header {
+  transition: box-shadow .35s, background .35s;
+}
+.header-scrolled {
+  box-shadow: 0 8px 26px -12px rgba(30, 16, 8, .3);
+}
+html { scroll-behavior: smooth; }
+
+/* ---------- 14. CHI TIẾT NHỎ ---------- */
+::selection {
+  background: var(--c-accent, #b07d4f);
+  color: #fff;
+}
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: #f3ede6; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#b07d4f, #7a5236);
+  border-radius: 8px;
+  border: 2px solid #f3ede6;
+}
+::-webkit-scrollbar-thumb:hover { background: #7a5236; }
+
+body { animation: page-enter .5s ease both; }
+@keyframes page-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  html { scroll-behavior: auto; }
+  .rv { opacity: 1; transform: none; }
+}

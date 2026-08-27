@@ -8,7 +8,7 @@ export const POSTS = [
     date: '2026-08-18',
     author: 'Thảo Nhi',
     readMin: 6,
-    image: '/images/drinks/capheda.svg',
+    image: '/images/menu/blog-1.jpg',
     excerpt: 'Từ phin sữa đá quốc dân đến bạc xỉu "người mới bắt đầu" — khám phá văn hoá cà phê Sài Gòn qua từng ly.',
     content: `
 <p>Nói đến Sài Gòn là nói đến cà phê. Từ quán vỉa hè ghế nhựa đến specialty coffee có điều hòa mát rượi, thành phố này uống cà phê theo cách riêng của mình.</p>
@@ -33,7 +33,7 @@ export const POSTS = [
     date: '2026-08-10',
     author: 'Anh Quân (Barista trưởng)',
     readMin: 4,
-    image: '/images/drinks/hot.svg',
+    image: '/images/menu/blog-2.jpg',
     excerpt: 'Không bơ, không phụ gia — chỉ có hạt xanh và lửa. Tìm hiểu vì sao rang mộc giữ trọn hương vị gốc của cà phê.',
     content: `
 <p>Rang mộc là phương pháp rang cà phê <strong>không thêm bất kỳ nguyên liệu nào</strong> vào hạt — không bơ, không đường, không hương liệu như kiểu rang "dầu" truyền thống cũ.</p>
@@ -49,7 +49,7 @@ export const POSTS = [
     date: '2026-07-28',
     author: 'Thảo Nhi',
     readMin: 5,
-    image: '/images/drinks/peach.svg',
+    image: '/images/menu/blog-3.jpg',
     excerpt: 'Đào vàng juicy, cam tươi, sả đập dập — công thức đầy đủ để bạn tự làm tại nhà khi nhớ vị quán.',
     content: `
 <p>Món quốc dân mùa hè này thật ra tự làm tại nhà cực dễ nếu nắm đúng tỷ lệ. Đây là công thức chúng tôi dùng ở quán (đã chia đôi số lượng cho 2 ly).</p>
@@ -77,7 +77,7 @@ export const POSTS = [
     date: '2026-07-01',
     author: 'Ban biên tập',
     readMin: 3,
-    image: '/images/banners/banner3.svg',
+    image: '/images/menu/blog-4.jpg',
     excerpt: 'Chi nhánh thứ ba với sân vườn xanh, khu làm việc yên tĩnh và ưu đãi 20% suốt tuần lễ khai trương.',
     content: `
 <p>Sau 3 tháng sửa chữa, <strong>Coffee Home Thảo Điền</strong> chính thức mở cửa tại 92 Xuân Thủy — cách cầu Sài Gòn chỉ 5 phút chạy xe.</p>
@@ -97,7 +97,7 @@ export const POSTS = [
     date: '2026-06-15',
     author: 'Anh Quân (Barista trưởng)',
     readMin: 5,
-    image: '/images/drinks/caphesua.svg',
+    image: '/images/menu/blog-5.jpg',
     excerpt: 'Thích ngọt? Ghét chua? Cần tỉnh táo tối đa? Bí kíp chọn đồ uống không cần hỏi ai.',
     content: `
 <p>Nhiều khách hỏi "quán ơi uống gì ngon?" — câu trả lời phụ thuộc vào gu của bạn nhiều hơn là menu. Dưới đây là cheat sheet của barista:</p>
@@ -127,7 +127,7 @@ export default async function init() {
         </div>
         <h3>${escapeHtml(p.title)}</h3>
         <p>${escapeHtml(p.excerpt)}</p>
-        <a class="read-more" href="/blog-post.html?id=${p.slug}">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></a>
+        <a class="read-more" href="/pages/blog-post.html?id=${p.slug}">Đọc tiếp <i class="fa-solid fa-arrow-right-long"></i></a>
       </div>
     </article>`).join('');
 

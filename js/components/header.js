@@ -1,17 +1,19 @@
 // Header + mobile nav: inject vào #header trên mọi trang
 import { $ } from '../core/utils.js';
-import { cart, user, wishlist } from '../core/store.js';
+import { cart, user, session, wishlist, onUserLogout, tableSession } from '../core/store.js';
 import { openSearch } from './search.js';
 import { toggleTheme } from './darkmode.js';
 
 const LINKS = [
   { href: '/index.html', label: 'Trang chủ', icon: 'fa-house', match: '/' },
-  { href: '/menu.html', label: 'Thực đơn', icon: 'fa-mug-hot' },
-  { href: '/booking.html', label: 'Đặt bàn', icon: 'fa-chair', new: true },
-  { href: '/voucher.html', label: 'Ưu đãi', icon: 'fa-ticket', new: true },
-  { href: '/blog.html', label: 'Blog', icon: 'fa-newspaper' },
-  { href: '/contact.html', label: 'Liên hệ', icon: 'fa-location-dot' }
+  { href: '/pages/menu.html', label: 'Thực đơn', icon: 'fa-mug-hot' },
+  { href: '/pages/booking.html', label: 'Đặt bàn', icon: 'fa-chair', new: true },
+  { href: '/pages/voucher.html', label: 'Ưu đãi', icon: 'fa-ticket', new: true },
+  { href: '/pages/blog.html', label: 'Blog', icon: 'fa-newspaper' },
+  { href: '/pages/contact.html', label: 'Liên hệ', icon: 'fa-location-dot' }
 ];
+
+const TABLE_PAGES = ['/pages/menu.html', '/pages/checkout.html'];
 
 function html() {
   const u = user.get();
@@ -37,9 +39,14 @@ function html() {
       </nav>
 
       <div class="header-actions">
+        <span class="table-chip" id="table-chip" ${tableSession.isTableOrder() && TABLE_PAGES.some(p => location.pathname.includes(p)) ? '' : 'hidden'}>
+          <i class="fa-solid fa-utensils"></i>
+          <span id="table-chip-text">${tableSession.get()?.name || (tableSession.get() ? 'Bàn ' + (tableSession.get()?.id || '') : '')}</span>
+          <button class="table-chip-x" id="table-chip-x" aria-label="Rời bàn">×</button>
+        </span>
         <button class="icon-btn" id="btn-search" aria-label="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
         <button class="icon-btn" id="btn-theme" aria-label="Đổi giao diện sáng/tối"><i class="fa-regular fa-moon"></i></button>
-        <a class="icon-btn" href="/wishlist.html" aria-label="Yêu thích">
+        <a class="icon-btn" href="/pages/wishlist.html" aria-label="Yêu thích">
           <i class="fa-regular fa-heart"></i>
           <span class="cart-count wl-count" ${wishlist.get().length ? '' : 'hidden'}>${wishlist.get().length}</span>
         </a>
@@ -47,6 +54,9 @@ function html() {
           <i class="fa-solid fa-basket-shopping"></i>
           <span class="cart-count">${cart.count()}</span>
         </button>
+        <a class="icon-btn" href="/pages/order-tracking.html" aria-label="Theo dõi đơn" title="Theo dõi đơn hàng">
+          <i class="fa-solid fa-location-dot"></i>
+        </a>
 
         <div class="user-menu" id="user-menu">
           <button class="icon-btn" id="btn-user" aria-label="Tài khoản">
@@ -59,15 +69,15 @@ function html() {
                 <small>${u.email}</small>
                 <small class="um-points"><i class="fa-solid fa-star"></i> ${u.points || 0} điểm tích luỹ</small>
               </div>
-              <a href="/account.html"><i class="fa-solid fa-user-pen"></i> Tài khoản của tôi</a>
-              <a href="/account.html?tab=orders"><i class="fa-solid fa-receipt"></i> Đơn hàng của tôi</a>
-              <a href="/account.html?tab=points"><i class="fa-solid fa-gift"></i> Điểm & đổi quà</a>
-              ${u.isAdmin ? '<a href="/admin.html"><i class="fa-solid fa-gauge-high"></i> Trang quản trị</a>' : ''}
+              <a href="/pages/account.html"><i class="fa-solid fa-user-pen"></i> Tài khoản của tôi</a>
+              <a href="/pages/account.html?tab=orders"><i class="fa-solid fa-receipt"></i> Đơn hàng của tôi</a>
+              <a href="/pages/account.html?tab=points"><i class="fa-solid fa-gift"></i> Điểm & đổi quà</a>
+              ${u.isAdmin ? '<a href="/admin/admin.html"><i class="fa-solid fa-gauge-high"></i> Trang quản trị</a>' : ''}
               <button id="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</button>
             ` : `
               <div class="um-head"><strong>Xin chào!</strong><small>Đăng nhập để tích điểm</small></div>
-              <a href="/login.html"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a>
-              <a href="/register.html"><i class="fa-solid fa-user-plus"></i> Tạo tài khoản</a>
+              <a href="/auth/login.html"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</a>
+              <a href="/auth/register.html"><i class="fa-solid fa-user-plus"></i> Tạo tài khoản</a>
             `}
           </div>
         </div>
@@ -81,7 +91,8 @@ function html() {
     <button class="icon-btn mn-close" id="btn-mn-close" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button>
     <ul>
       ${LINKS.map(l => `<li><a href="${l.href}" class="${isActive(l) ? 'active' : ''}"><i class="fa-solid ${l.icon}"></i> ${l.label}</a></li>`).join('')}
-      <li><a href="${u ? '/account.html' : '/login.html'}"><i class="fa-solid fa-user"></i> ${u ? 'Tài khoản' : 'Đăng nhập'}</a></li>
+      <li><a href="/pages/order-tracking.html"><i class="fa-solid fa-location-dot"></i> Theo dõi đơn</a></li>
+      <li><a href="${u ? '/pages/account.html' : '/auth/login.html'}"><i class="fa-solid fa-user"></i> ${u ? 'Tài khoản' : 'Đăng nhập'}</a></li>
     </ul>
   </nav>
   <div class="overlay" id="nav-overlay"></div>`;
@@ -113,7 +124,10 @@ export function initHeader() {
     um.classList.toggle('open');
   });
   document.addEventListener('click', () => um?.classList.remove('open'));
-  $('#btn-logout')?.addEventListener('click', () => {
+  $('#btn-logout')?.addEventListener('click', async () => {
+    try { await import('../core/api.js').then(m => m.logoutApi()); } catch { /* bỏ qua */ }
+    onUserLogout(); // cất giỏ cho user này + xoá giỏ/voucher đang hiển thị
+    session.clear();
     user.clear();
     window.location.href = '/index.html';
   });
@@ -130,6 +144,8 @@ export function initHeader() {
   const setNav = (open) => {
     $('#mobile-nav').classList.toggle('open', open);
     overlay.classList.toggle('show', open);
+    const cartOpen = document.getElementById('cart-drawer')?.classList.contains('open');
+    document.body.style.overflow = (open || cartOpen) ? 'hidden' : '';
   };
   $('#btn-burger')?.addEventListener('click', () => setNav(true));
   $('#btn-mn-close')?.addEventListener('click', () => setNav(false));
@@ -147,4 +163,21 @@ export function initHeader() {
   };
   window.addEventListener('cart:change', refreshBadges);
   window.addEventListener('wishlist:change', refreshBadges);
+
+  // đồng bộ chip bàn — chỉ hiện trên trang menu & checkout
+  const refreshTableChip = () => {
+    const chip = $('#table-chip');
+    const info = tableSession.get();
+    if (!chip) return;
+    const onTablePage = TABLE_PAGES.some(p => location.pathname.includes(p));
+    chip.hidden = !(info && onTablePage);
+    const txt = $('#table-chip-text');
+    if (txt) txt.textContent = info?.name || ('Bàn ' + (info?.id || ''));
+  };
+  refreshTableChip();
+  window.addEventListener('table:change', refreshTableChip);
+  $('#table-chip-x')?.addEventListener('click', () => {
+    tableSession.clear();
+    window.dispatchEvent(new CustomEvent('table:change'));
+  });
 }

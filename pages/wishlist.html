@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Món yêu thích — Coffee Home</title>
+  <meta name="description" content="Danh sách món yêu thích của bạn tại Coffee Home — lưu lại để đặt nhanh hơn lần sau.">
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/effects.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="wishlist">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+
+  <!-- Page hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Món yêu thích</h1>
+    </div>
+  </section>
+
+  <!-- Danh sách yêu thích -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-products" id="wishlist-grid"></div>
+      <div class="empty-state" id="wishlist-empty" hidden>
+        <i class="fa-solid fa-heart-crack"></i>
+        <h3>Chưa có món yêu thích nào</h3>
+        <p>Bấm trái tim ở góc món bất kỳ để lưu lại nha</p>
+        <a class="btn btn-primary" href="/pages/menu.html">Khám phá thực đơn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

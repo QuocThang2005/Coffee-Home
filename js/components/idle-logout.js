@@ -1,5 +1,5 @@
 // Tự động đăng xuất sau 30 phút không hoạt động (bảo mật phiên)
-import { user } from '../core/store.js';
+import { user, session, onUserLogout } from '../core/store.js';
 import { toast } from '../core/utils.js';
 
 const IDLE_MS = 30 * 60 * 1000;
@@ -11,6 +11,8 @@ function reset() {
   clearTimeout(timer);
   if (!user.isLoggedIn()) return;
   timer = setTimeout(() => {
+    onUserLogout(); // cất giỏ của user này + xoá giỏ/voucher đang hiển thị
+    session.clear();
     user.clear();
     toast('Bạn đã bị đăng xuất do không hoạt động quá lâu', 'warn', 4000);
     window.dispatchEvent(new CustomEvent('cart:change'));

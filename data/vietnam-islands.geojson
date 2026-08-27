@@ -1,0 +1,69 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Quần đảo Hoàng Sa", "type": "archipelago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[111.1, 15.4], [114.0, 15.4], [114.0, 16.9], [111.1, 16.9], [111.1, 15.4]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Quần đảo Trường Sa", "type": "archipelago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[114.2, 8.5], [117.5, 8.5], [117.5, 11.8], [114.2, 11.8], [114.2, 8.5]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Côn Sơn", "type": "island" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.61, 8.69]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Phú Quốc", "type": "island" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.96, 10.23]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Cù Lao Chàm", "type": "island" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [105.93, 15.95]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Côn Đảo", "type": "island" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.60, 8.73]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Nam Du", "type": "island" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.37, 9.61]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hòn Bà", "type": "island" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.33, 8.92]
+      }
+    }
+  ]
+}

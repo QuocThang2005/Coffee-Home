@@ -15,6 +15,6 @@ export default function init() {
     if (pass !== confirm) return toast('Mật khẩu nhập lại chưa khớp', 'error');
 
     toast('Đặt lại mật khẩu thành công! Mời bạn đăng nhập.', 'success');
-    setTimeout(() => location.href = '/login.html', 800);
+    setTimeout(() => location.href = '/auth/login.html', 800);
   });
 }

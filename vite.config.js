@@ -1,28 +1,46 @@
 import { defineConfig } from 'vite';
-import { resolve, dirname } from 'path';
+import { resolve, dirname, relative } from 'path';
 import { fileURLToPath } from 'url';
-import { readdirSync } from 'fs';
+import { readdirSync, readFileSync, statSync } from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const conf = JSON.parse(readFileSync(new URL('./config.json', import.meta.url), 'utf8'));
+const backend = `http://localhost:${conf.backendPort}`;
 
-// Moi file .html o goc = 1 trang (MPA)
-const pages = Object.fromEntries(
-  readdirSync(__dirname)
-    .filter((f) => f.endsWith('.html'))
-    .map((f) => [f, resolve(__dirname, f)])
-);
+// Quet tat ca .html trong root + pages/ + auth/ + admin/ + debug/
+function findHtml(dir, base) {
+  const entries = [];
+  for (const f of readdirSync(dir)) {
+    const full = resolve(dir, f);
+    if (statSync(full).isDirectory()) {
+      entries.push(...findHtml(full, base));
+    } else if (f.endsWith('.html')) {
+      const key = relative(base, full).replace(/\\/g, '/');
+      entries.push([key, full]);
+    }
+  }
+  return entries;
+}
+const pages = Object.fromEntries(findHtml(__dirname, __dirname));
 
 export default defineConfig({
   appType: 'mpa',
+  // Client ID Google OAuth — frontend đọc qua hằng __GOOGLE_CLIENT_ID__
+  define: {
+    __GOOGLE_CLIENT_ID__: JSON.stringify(conf.googleClientId || '')
+  },
   build: {
     outDir: 'dist',
+    target: 'es2022',
     rollupOptions: { input: pages }
   },
   server: {
-    port: 5174,
+    port: conf.frontendPort,
+    strictPort: true,
     proxy: {
-      '/api': 'http://localhost:8001',
-      '/uploads': 'http://localhost:8001'
+      '/api': backend,
+      '/uploads': backend,
+      '/ws': { target: `ws://localhost:${conf.backendPort}`, ws: true }
     }
   }
 });

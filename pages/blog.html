@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/effects.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="blog-data">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Blog Coffee Home</h1>
+      <nav class="breadcrumb"><a href="/index.html">Trang chủ</a><span>/</span><span>Blog</span></nav>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-posts" id="posts-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px"></div>
+      <p class="text-center muted" id="posts-loading">Đang tải bài viết…</p>
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

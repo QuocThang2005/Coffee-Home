@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <title>Quản trị | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="admin">
+
+<main id="main-content">
+  <!-- Màn chờ kiểm tra đăng nhập -->
+  <div id="admin-boot" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;gap:14px">
+    <i class="fa-solid fa-mug-hot fa-3x" style="color:var(--c-accent,#8a5a44)"></i>
+    <p id="admin-boot-msg">Đang xác thực phiên đăng nhập…</p>
+    <button class="btn btn-primary" id="admin-boot-login" hidden>Đến trang đăng nhập</button>
+  </div>
+
+  <!-- Nội dung dashboard -->
+  <div class="admin-layout" id="admin-app" hidden>
+    <aside class="admin-sidebar">
+      <a class="as-brand" href="/index.html" title="Về trang khách">
+        <img src="/images/logo.svg" alt="Coffee Home">
+        <span>Coffee<b>Home</b><small>Khu vực quản trị</small></span>
+      </a>
+      <nav class="as-links" id="admin-nav">
+        <a href="#overview" class="on" data-view="overview"><i class="fa-solid fa-gauge-high"></i> Tổng quan</a>
+        <a href="#orders" data-view="orders"><i class="fa-solid fa-receipt"></i> Đơn hàng</a>
+        <a href="#products" data-view="products"><i class="fa-solid fa-mug-hot"></i> Sản phẩm</a>
+        <a href="#bookings" data-view="bookings"><i class="fa-solid fa-chair"></i> Đặt bàn</a>
+        <a href="#careers" data-view="careers"><i class="fa-solid fa-user-plus"></i> Ứng tuyển</a>
+        <a href="#feedback" data-view="feedback"><i class="fa-solid fa-comment-dots"></i> Phản hồi</a>
+        <a href="#promos" data-view="promos"><i class="fa-solid fa-ticket"></i> Khuyến mãi</a>
+        <a href="#customers" data-view="customers"><i class="fa-solid fa-users"></i> Khách hàng</a>
+        <a href="#settings" data-view="settings"><i class="fa-solid fa-gear"></i> Cài đặt</a>
+      </nav>
+      <div class="as-foot"><i class="fa-solid fa-circle-check" style="color:var(--c-success)"></i> Hệ thống hoạt động</div>
+    </aside>
+
+    <section class="admin-main">
+      <div class="admin-topbar">
+        <h2 id="view-title">Tổng quan hôm nay</h2>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="muted" id="admin-who" style="font-size:.88rem"></span>
+          <button class="btn btn-sm btn-outline" id="admin-refresh" title="Tải lại dữ liệu"><i class="fa-solid fa-rotate"></i> Làm mới</button>
+          <button class="btn btn-sm btn-outline" id="admin-logout" style="color:#c0392b"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</button>
+        </div>
+      </div>
+
+      <div class="admin-view" id="view-overview"></div>
+      <div class="admin-view" id="view-orders" hidden></div>
+      <div class="admin-view" id="view-products" hidden></div>
+      <div class="admin-view" id="view-bookings" hidden></div>
+      <div class="admin-view" id="view-careers" hidden></div>
+      <div class="admin-view" id="view-feedback" hidden></div>
+      <div class="admin-view" id="view-promos" hidden></div>
+      <div class="admin-view" id="view-customers" hidden></div>
+      <div class="admin-view" id="view-settings" hidden></div>
+    </section>
+  </div>
+</main>
+
+<div class="modal-backdrop" id="modal-backdrop" hidden></div>
+
+<script type="module" src="/js/admin-main.js?v=20260825"></script>
+</body>
+</html>

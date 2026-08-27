@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theo dõi đơn hàng — Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/effects.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body data-page="order-tracking">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+<div id="header"></div>
+<main id="main-content">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Theo dõi đơn hàng</h1>
+      <p class="muted">Nhập mã đơn để xem trạng thái trên bản đồ</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div id="tracking-search" style="max-width:500px;margin:0 auto 28px;text-align:center">
+        <div style="display:flex;gap:8px">
+          <input type="text" id="tracking-input" class="input" placeholder="Nhập mã đơn hàng (VD: CH-A1B2C)" style="flex:1;text-transform:uppercase;font-weight:600;letter-spacing:1px;text-align:center">
+          <button class="btn btn-accent" id="btn-track"><i class="fa-solid fa-magnifying-location"></i> Theo dõi</button>
+        </div>
+        <div id="tracking-msg" style="font-size:.82rem;margin-top:8px;min-height:20px"></div>
+      </div>
+      <div id="tracking-result" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start" id="tracking-layout">
+          <div id="tracking-map" style="height:480px;border-radius:var(--radius);box-shadow:var(--shadow);z-index:1"></div>
+          <div id="tracking-sidebar">
+            <div class="info-card" id="order-info"></div>
+            <div class="info-card" id="status-timeline" style="margin-top:14px"></div>
+          </div>
+        </div>
+      </div>
+      <div id="no-result" style="display:none;text-align:center;padding:48px 0">
+        <i class="fa-solid fa-map-location-dot" style="font-size:3rem;color:var(--c-muted);margin-bottom:14px;display:block"></i>
+        <p class="muted">Nhập mã đơn hàng để theo dõi vị trí giao hàng và trạng thái đơn</p>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="footer"></div>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

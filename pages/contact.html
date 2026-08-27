@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liên hệ | Coffee Home</title>
+  <link rel="icon" href="/images/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/effects.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body data-page="contact">
+<a class="skip-link" href="#main-content">Bỏ qua tới nội dung</a>
+
+<div id="header"></div>
+
+<main id="main-content">
+  <section class="page-hero">
+    <div class="container">
+      <h1>Liên hệ</h1>
+      <nav class="breadcrumb"><a href="/index.html">Trang chủ</a><span>/</span><span>Liên hệ</span></nav>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-cards">
+        <div class="info-card">
+          <div class="ic-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <h3>Coffee Home Nguyễn Văn Trỗi</h3>
+          <ul>
+            <li><i class="fa-solid fa-map-pin" style="color:var(--c-accent);margin-right:8px"></i>128 Nguyễn Văn Trỗi, Phú Nhuận, TP.HCM</li>
+            <li class="mt-1"><i class="fa-solid fa-clock" style="color:var(--c-accent);margin-right:8px"></i>07:00 – 22:30 hằng ngày</li>
+            <li class="mt-1"><i class="fa-solid fa-phone" style="color:var(--c-accent);margin-right:8px"></i>028 3845 1234</li>
+          </ul>
+          <a href="/pages/booking.html" class="btn btn-outline btn-sm mt-2">Đặt bàn ở đây</a>
+        </div>
+
+        <div class="info-card">
+          <div class="ic-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <h3>Coffee Home Nguyễn Huệ</h3>
+          <ul>
+            <li><i class="fa-solid fa-map-pin" style="color:var(--c-accent);margin-right:8px"></i>57 Nguyễn Huệ, Quận 1, TP.HCM</li>
+            <li class="mt-1"><i class="fa-solid fa-clock" style="color:var(--c-accent);margin-right:8px"></i>07:00 – 23:00 hằng ngày</li>
+            <li class="mt-1"><i class="fa-solid fa-phone" style="color:var(--c-accent);margin-right:8px"></i>028 3915 5678</li>
+          </ul>
+          <a href="/pages/booking.html" class="btn btn-outline btn-sm mt-2">Đặt bàn ở đây</a>
+        </div>
+
+        <div class="info-card">
+          <div class="ic-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <h3>Coffee Home Thảo Điền</h3>
+          <ul>
+            <li><i class="fa-solid fa-map-pin" style="color:var(--c-accent);margin-right:8px"></i>92 Xuân Thủy, Thảo Điền, Thủ Đức</li>
+            <li class="mt-1"><i class="fa-solid fa-clock" style="color:var(--c-accent);margin-right:8px"></i>06:30 – 22:00 hằng ngày</li>
+            <li class="mt-1"><i class="fa-solid fa-phone" style="color:var(--c-accent);margin-right:8px"></i>028 3744 8899</li>
+          </ul>
+          <a href="/pages/booking.html" class="btn btn-outline btn-sm mt-2">Đặt bàn ở đây</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Tìm đường</span>
+        <h2>Bản đồ các chi nhánh</h2>
+      </div>
+      <div class="map-frame"><div id="map"></div></div>
+
+      <div class="text-center mt-3">
+        <p class="muted">Hotline: <strong>1900 1234</strong> · Email: <strong>hello@coffeehome.vn</strong></p>
+        <p class="muted mt-1" style="font-size:.88rem">Góp ý cho quán? <a href="#phan-hoi" style="color:var(--c-primary)">Nhắn ngay bên dưới</a> — chúng tôi đọc từng lời 😊</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="phan-hoi">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Góp ý &amp; đánh giá</span>
+        <h2>Bạn cảm nhận thế nào về Coffee Home?</h2>
+      </div>
+
+      <form id="feedback-form" class="panel fb-form" novalidate>
+        <div class="fb-stars" id="fb-stars" role="radiogroup" aria-label="Số sao đánh giá">
+          <i class="fa-regular fa-star" data-star="1" tabindex="0"></i>
+          <i class="fa-regular fa-star" data-star="2" tabindex="0"></i>
+          <i class="fa-regular fa-star" data-star="3" tabindex="0"></i>
+          <i class="fa-regular fa-star" data-star="4" tabindex="0"></i>
+          <i class="fa-regular fa-star" data-star="5" tabindex="0"></i>
+          <span class="muted" id="fb-star-label">Chạm để chấm sao</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" id="fg-fb-name">
+            <label for="fb-name">Tên của bạn <span class="req">*</span></label>
+            <input type="text" id="fb-name" class="input" placeholder="Nguyễn Văn A" autocomplete="name">
+            <p class="form-error">Vui lòng nhập tên (tối thiểu 2 ký tự)</p>
+          </div>
+          <div class="form-group">
+            <label for="fb-contact">Email hoặc SĐT <small class="muted">(không bắt buộc)</small></label>
+            <input type="text" id="fb-contact" class="input" placeholder="Để quán phản hồi bạn nhanh hơn">
+          </div>
+        </div>
+
+        <div class="form-group" id="fg-fb-msg">
+          <label for="fb-msg">Nội dung góp ý <span class="req">*</span></label>
+          <textarea class="input" id="fb-msg" rows="4" maxlength="1000"
+            placeholder="Món nước, không gian, phục vụ... bạn thấy sao?"></textarea>
+          <p class="form-error">Viết vài chữ góp ý nhé (tối thiểu 5 ký tự)</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="fb-submit">
+          <i class="fa-solid fa-comment-dots"></i> Gửi phản hồi
+        </button>
+      </form>
+
+      <div class="panel text-center" id="feedback-success" hidden>
+        <i class="fa-solid fa-circle-check success-icon"></i>
+        <h3 style="margin:.6rem 0 .3rem">Đã gửi phản hồi!</h3>
+        <p class="muted" id="feedback-success-msg" style="margin:0 0 1rem"></p>
+        <button class="btn btn-outline btn-sm" id="fb-again">Gửi thêm phản hồi khác</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

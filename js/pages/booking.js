@@ -85,16 +85,26 @@ export default async function init() {
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang giữ bàn…';
 
     const branch = branches.find(b => b.id === branchId);
-    const res = await submitBooking({
-      branchId,
-      branchName: branch.name,
-      date: dateInput.value,
-      time: chosenSlot,
-      guests: Number($('#bk-guests').value),
-      name,
-      phone,
-      note: $('#bk-note').value.trim() || null
-    });
+    let res;
+    try {
+      // khớp chặt với model BookingIn của backend — branchId là chuỗi, không gửi null
+      res = await submitBooking({
+        branchId: String(branchId),
+        date: dateInput.value,
+        time: chosenSlot,
+        guests: Number($('#bk-guests').value),
+        name,
+        phone,
+        note: $('#bk-note').value.trim()
+      });
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-chair"></i> Đặt bàn';
+      toast(err.status
+        ? (err.message || 'Đặt bàn thất bại, vui lòng thử lại')
+        : 'Không kết nối được quán — hãy chắc chắn start-coffee.bat đang chạy', 'error', 5000);
+      return;
+    }
 
     document.getElementById('booking-form').hidden = true;
     document.querySelector('.page-hero h1').textContent = 'Đặt bàn trước';
