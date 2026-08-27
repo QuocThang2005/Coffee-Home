@@ -59,9 +59,6 @@ export default async function init() {
 
     <div>
       <div style="display:flex;gap:8px;margin-bottom:10px">
-        ${p.tags?.includes('bestseller') ? '<span class="badge badge-hot">BEST SELLER</span>' : ''}
-        ${p.discountPct > 0 ? `<span class="badge badge-sale">-${p.discountPct}%</span>` : ''}
-        ${p.tags?.includes('new') ? '<span class="badge badge-new">MỚI</span>' : ''}
         <span class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:1px">${escapeHtml(catName)}</span>
       </div>
 

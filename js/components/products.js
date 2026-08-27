@@ -5,16 +5,10 @@ import { wishlist } from '../core/store.js';
 export function productCard(p) {
   const wished = wishlist.has(p.id);
   const price = Math.round(p.basePrice * (1 - (p.discountPct || 0) / 100));
-  const tags = [];
-  if ((p.tags || []).includes('bestseller')) tags.push('<span class="badge badge-hot">BEST SELLER</span>');
-  if (p.discountPct > 0) tags.push(`<span class="badge badge-sale">-${p.discountPct}%</span>`);
-  if ((p.tags || []).includes('new')) tags.push('<span class="badge badge-new">MỚI</span>');
-
   return `
   <article class="product-card" data-id="${p.id}">
     <div class="pc-img">
       <a href="/pages/product.html?id=${p.slug}"><img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy"></a>
-      <div class="pc-tags">${tags.join('')}</div>
       <button class="pc-wish ${wished ? 'on' : ''}" data-wish="${p.id}" data-name="${escapeHtml(p.name)}"
               aria-label="Yêu thích"><i class="fa-${wished ? 'solid' : 'regular'} fa-heart"></i></button>
     </div>
