@@ -3,7 +3,9 @@
 // chưa chạy; còn các hành động (đặt hàng, đặt bàn...) luôn báo lỗi thật,
 // tuyệt đối không trả thành công giả.
 
-const API_BASE = '/api';
+const _conf = typeof __API_BASE_URL__ !== 'undefined' ? __API_BASE_URL__ : '';
+const API_BASE = _conf ? _conf + '/api' : '/api';
+const WS_BASE  = _conf ? _conf.replace('https://', 'wss://').replace('http://', 'ws://') : `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
 const TIMEOUT = 15000;
 
 // Khu vực /admin* dùng cặp khóa riêng để phiên admin KHÔNG xung đột
@@ -118,8 +120,7 @@ let _adminWs = null;
  */
 export function connectAdminWS(onEvent) {
   if (_adminWs) _adminWs.close();
-  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-  const ws = new WebSocket(`${proto}://${location.host}/ws/admin`);
+  const ws = new WebSocket(`${WS_BASE}/ws/admin`);
   _adminWs = ws;
   ws.onmessage = (ev) => {
     try { onEvent(JSON.parse(ev.data)); } catch { /* bỏ qua */ }

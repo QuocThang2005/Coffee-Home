@@ -2,5 +2,6 @@
   "frontendPort": 5174,
   "backendPort": 8010,
   "googleClientId": "314737262014-tu67as4r60d641vusq7fgnplcg6r9u62.apps.googleusercontent.com",
-  "_ghi_chu": "Sua port o day duy nhat - vite.config.js va scripts/start-all.js tu doc. googleClientId: dan Client ID tu Google Cloud Console (dang ...apps.googleusercontent.com) de bat dang nhap Google. BAT BUOC cung set env GOOGLE_CLIENT_ID truoc khi chay backend."
+  "apiBaseUrl": "https://coffee-home-0vsb.onrender.com",
+  "_ghi_chu": "apiBaseUrl: de trong khi dev (Vite proxy). Khi deploy Vercel, set thanh URL Render"
 }

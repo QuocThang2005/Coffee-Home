@@ -27,7 +27,8 @@ export default defineConfig({
   appType: 'mpa',
   // Client ID Google OAuth — frontend đọc qua hằng __GOOGLE_CLIENT_ID__
   define: {
-    __GOOGLE_CLIENT_ID__: JSON.stringify(conf.googleClientId || '')
+    __GOOGLE_CLIENT_ID__: JSON.stringify(conf.googleClientId || ''),
+    __API_BASE_URL__: JSON.stringify(conf.apiBaseUrl || '')
   },
   build: {
     outDir: 'dist',
