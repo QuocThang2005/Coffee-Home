@@ -63,8 +63,6 @@ async def lifespan(_: FastAPI):
     init_db()
     yield
 
-    logging.getLogger("uvicorn.access").info("Coffee Home API shut down.")
-
 
 app = FastAPI(
     title="Coffee Home API",
