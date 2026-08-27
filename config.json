@@ -1,7 +1,7 @@
 {
   "frontendPort": 5174,
   "backendPort": 8010,
-  "googleClientId": "314737262014-tu67as4r60d641vusq7fgnplcg6r9u62.apps.googleusercontent.com",
+  "googleClientId": "314737262014-tmtl20p3c1g1ns4qh5tjjdjsv44ilomb.apps.googleusercontent.com",
   "apiBaseUrl": "https://coffee-home-0vsb.onrender.com",
   "_ghi_chu": "apiBaseUrl: de trong khi dev (Vite proxy). Khi deploy Vercel, set thanh URL Render"
 }
