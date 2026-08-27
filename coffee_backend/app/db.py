@@ -6,6 +6,7 @@
 #           reward_redemptions, branches, branch_tables, notifications, audit_logs
 import glob
 import json
+import logging
 import os
 import re
 import sqlite3
