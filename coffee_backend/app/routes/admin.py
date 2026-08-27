@@ -1,4 +1,6 @@
 import json
+import os
+import tempfile
 import uuid
 import time
 from datetime import date, datetime, timedelta
@@ -11,6 +13,13 @@ from ._common import vn_today, require_admin
 from ._schemas import SettingsIn
 
 router = APIRouter()
+
+def _upload_dir(subdir: str = "") -> Path:
+    d = Path(os.environ.get("UPLOAD_DIR", tempfile.gettempdir())) / "uploads"
+    if subdir:
+        d = d / subdir
+    d.mkdir(parents=True, exist_ok=True)
+    return d
 
 ALLOWED_VIDEO_EXT = {".mp4", ".webm", ".ogg", ".mov"}
 MAX_VIDEO_MB = 50
@@ -206,8 +215,7 @@ async def admin_upload_video(file: UploadFile, _=Depends(require_admin)):
     data = await file.read()
     if len(data) > MAX_VIDEO_MB * 1024 * 1024:
         raise HTTPException(400, f"Video tối đa {MAX_VIDEO_MB}MB")
-    upload_dir = Path(__file__).resolve().parents[1] / "uploads" / "videos"
-    upload_dir.mkdir(parents=True, exist_ok=True)
+    upload_dir = _upload_dir("videos")
     fname = f"{int(time.time())}_{uuid.uuid4().hex[:8]}{ext}"
     (upload_dir / fname).write_bytes(data)
     return {"ok": True, "url": f"/uploads/videos/{fname}"}
@@ -221,8 +229,7 @@ async def admin_upload_qr(file: UploadFile, _=Depends(require_admin)):
     data = await file.read()
     if len(data) > MAX_QR_MB * 1024 * 1024:
         raise HTTPException(400, f"Ảnh tối đa {MAX_QR_MB}MB")
-    upload_dir = Path(__file__).resolve().parents[1] / "uploads" / "qrcode"
-    upload_dir.mkdir(parents=True, exist_ok=True)
+    upload_dir = _upload_dir("qrcode")
     fname = f"{int(time.time())}_{uuid.uuid4().hex[:8]}{ext}"
     (upload_dir / fname).write_bytes(data)
     return {"ok": True, "url": f"/uploads/qrcode/{fname}"}

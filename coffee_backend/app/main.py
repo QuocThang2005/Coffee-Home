@@ -159,7 +159,9 @@ async def ws_admin(ws: WebSocket):
             _active_ws.discard(ws)
 
 # thư mục ảnh người dùng tải lên (đơn hàng, avatar…)
-UPLOAD_DIR = Path(__file__).resolve().parents[1] / "uploads"
+# Render free tier: app dir read-only, dùng /tmp cho uploads
+import tempfile
+UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", tempfile.gettempdir())) / "uploads"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 # Serve uploads — dùng route thường thay vì StaticFiles để tránh vấn đề read-only FS
