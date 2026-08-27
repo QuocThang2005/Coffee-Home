@@ -21,6 +21,9 @@ if DATABASE_URL:
     DATABASE_URL = DATABASE_URL.strip('"').strip("'")
     # Fix missing = in query params like "?sslmode require" → "?sslmode=require"
     DATABASE_URL = re.sub(r'([?&])(\w+) (\w+)', r'\1\2=\3', DATABASE_URL)
+    # Remove unsupported params (psycopg2 doesn't support channel_binding, etc.)
+    DATABASE_URL = re.sub(r'[?&]channel_binding=\w+', '', DATABASE_URL)
+    DATABASE_URL = re.sub(r'\?&', '?', DATABASE_URL)
     # Ensure sslmode=require is present for Neon
     if 'sslmode=' not in DATABASE_URL:
         sep = '&' if '?' in DATABASE_URL else '?'
