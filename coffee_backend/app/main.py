@@ -160,8 +160,17 @@ async def ws_admin(ws: WebSocket):
 
 # thư mục ảnh người dùng tải lên (đơn hàng, avatar…)
 UPLOAD_DIR = Path(__file__).resolve().parents[1] / "uploads"
-UPLOAD_DIR.mkdir(exist_ok=True)
-app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+# Serve uploads — dùng route thường thay vì StaticFiles để tránh vấn đề read-only FS
+@app.get("/uploads/{full_path:path}")
+async def serve_uploads(full_path: str):
+    from starlette.responses import FileResponse
+    file = UPLOAD_DIR / full_path
+    if file.is_file():
+        return FileResponse(str(file))
+    from fastapi.responses import JSONResponse
+    return JSONResponse(status_code=404, content={"detail": "File not found"})
 
 
 @app.exception_handler(ValueError)
