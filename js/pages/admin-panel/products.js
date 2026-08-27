@@ -2,6 +2,14 @@ import { $, formatVND, escapeHtml } from '../../core/utils.js';
 import { createProduct, updateProduct, deleteProduct } from '../../core/api.js';
 import { openModal, closeModal, toastMsg } from './_helpers.js';
 
+async function uploadProductImage(file) {
+  const form = new FormData();
+  form.append('file', file);
+  const res = await fetch('/api/admin/upload-product-image', { method: 'POST', headers: { Authorization: `Bearer ${localStorage.getItem('ch_admin_token') || ''}` }, body: form });
+  if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.detail || 'Upload thất bại'); }
+  return (await res.json()).url;
+}
+
 export function renderProducts(state) {
   $('#view-products').innerHTML = `
     <div class="panel">
@@ -37,6 +45,7 @@ export function renderProducts(state) {
 export function productModal(state, slug = null) {
   const p = slug ? state.menu.products.find(x => x.slug === slug) : null;
   const tags = p?.tags || [];
+  const tagStr = tags.join(', ');
   openModal(`
     <h3>${p ? `Sửa: ${escapeHtml(p.name)}` : 'Thêm món mới'}</h3>
     <div class="form-group"><label>Tên món *</label><input class="input" id="mp-name" value="${p ? escapeHtml(p.name) : ''}"></div>
@@ -47,27 +56,52 @@ export function productModal(state, slug = null) {
       </select></div>
     <div class="form-group"><label>Giá gốc (₫) *</label><input class="input" id="mp-price" type="number" min="0" value="${p?.basePrice ?? ''}"></div>
     <div class="form-group"><label>Giảm giá (%)</label><input class="input" id="mp-disc" type="number" min="0" max="90" value="${p?.discountPct ?? 0}"></div>
-    <div class="form-group"><label>Ảnh (đường dẫn)</label><input class="input" id="mp-img" value="${p ? escapeHtml(p.image) : '/images/logo.svg'}"></div>
-    <div class="form-group"><label>Mô tả</label><textarea class="input" id="mp-desc" rows="3">${p ? escapeHtml(p.desc) : ''}</textarea></div>
-    <div class="form-group"><label>Hiển thị trên trang chủ</label>
-      <div style="display:flex;gap:16px;margin-top:6px">
-        <label style="display:flex;gap:6px;align-items:center;cursor:pointer">
-          <input type="checkbox" id="mp-tag-bestseller" ${tags.includes('bestseller') ? 'checked' : ''}> Best Seller
-        </label>
-        <label style="display:flex;gap:6px;align-items:center;cursor:pointer">
-          <input type="checkbox" id="mp-tag-new" ${tags.includes('new') ? 'checked' : ''}> Món mới
+    <div class="form-group"><label>Ảnh sản phẩm</label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="input" id="mp-img" value="${p ? escapeHtml(p.image) : '/images/logo.svg'}" style="flex:1" placeholder="URL hoặc upload bên dưới">
+        <label class="btn btn-sm btn-outline" style="cursor:pointer;white-space:nowrap;margin:0">
+          <i class="fa-solid fa-upload"></i> Chọn ảnh
+          <input type="file" id="mp-img-file" accept="image/*" style="display:none">
         </label>
       </div>
+      <div id="mp-img-preview" style="margin-top:8px">
+        ${p?.image ? `<img src="${escapeHtml(p.image)}" style="max-width:120px;border-radius:8px" alt="">` : ''}
+      </div>
+    </div>
+    <div class="form-group"><label>Mô tả</label><textarea class="input" id="mp-desc" rows="3">${p ? escapeHtml(p.desc) : ''}</textarea></div>
+    <div class="form-group"><label>Tags (phân tách bằng dấu phẩy)</label>
+      <input class="input" id="mp-tags" value="${escapeHtml(tagStr)}" placeholder="Ví dụ: bestseller, new,.sale, hot">
+      <small class="muted" style="font-size:.78rem">Dùng tag <code>bestseller</code> để hiển thị Best Seller, <code>new</code> cho Món Mới trên trang chủ. Tag tùy ý khác cũng được.</small>
     </div>
     <div class="modal-actions">
       <button class="btn btn-outline" id="modal-cancel">Huỷ</button>
       <button class="btn btn-primary" id="mp-save">${p ? 'Lưu thay đổi' : 'Thêm món'}</button>
     </div>`);
 
+  // Upload image from file
+  $('#mp-img-file')?.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      toastMsg('Đang upload ảnh...', 'info');
+      const url = await uploadProductImage(file);
+      $('#mp-img').value = url;
+      $('#mp-img-preview').innerHTML = `<img src="${url}" style="max-width:120px;border-radius:8px" alt="">`;
+      toastMsg('Upload ảnh thành công', 'success');
+    } catch (err) {
+      toastMsg(err.message || 'Upload thất bại', 'error');
+    }
+  });
+
+  // Preview on URL change
+  $('#mp-img')?.addEventListener('input', (e) => {
+    const url = e.target.value.trim();
+    $('#mp-img-preview').innerHTML = url ? `<img src="${url}" style="max-width:120px;border-radius:8px" alt="" onerror="this.style.display='none'">` : '';
+  });
+
   $('#mp-save').onclick = async () => {
-    const newTags = [];
-    if ($('#mp-tag-bestseller').checked) newTags.push('bestseller');
-    if ($('#mp-tag-new').checked) newTags.push('new');
+    const tagInput = $('#mp-tags').value.trim();
+    const newTags = tagInput ? tagInput.split(',').map(t => t.trim().toLowerCase()).filter(Boolean) : [];
     const payload = {
       name: $('#mp-name').value.trim(),
       category: $('#mp-cat').value,

@@ -235,6 +235,23 @@ async def admin_upload_qr(file: UploadFile, _=Depends(require_admin)):
     return {"ok": True, "url": f"/uploads/qrcode/{fname}"}
 
 
+ALLOWED_IMG_EXT = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"}
+MAX_IMG_MB = 10
+
+@router.post("/admin/upload-product-image")
+async def admin_upload_product_image(file: UploadFile, _=Depends(require_admin)):
+    ext = Path(file.filename or "image.jpg").suffix.lower()
+    if ext not in ALLOWED_IMG_EXT:
+        raise HTTPException(400, f"Chỉ nhận: {', '.join(ALLOWED_IMG_EXT)}")
+    data = await file.read()
+    if len(data) > MAX_IMG_MB * 1024 * 1024:
+        raise HTTPException(400, f"Ảnh tối đa {MAX_IMG_MB}MB")
+    upload_dir = _upload_dir("products")
+    fname = f"{int(time.time())}_{uuid.uuid4().hex[:8]}{ext}"
+    (upload_dir / fname).write_bytes(data)
+    return {"ok": True, "url": f"/uploads/products/{fname}"}
+
+
 @router.get("/admin/branches")
 def list_branches_admin(_=Depends(require_admin)):
     with get_conn() as conn:
