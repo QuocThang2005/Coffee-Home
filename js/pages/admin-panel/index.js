@@ -2,7 +2,7 @@ import { $, $$, formatVND, escapeHtml } from '../../core/utils.js';
 import {
   getMenu, getVouchers, fetchMe, connectAdminWS,
   getAdminStats, getRevenueStats, adminOrders,
-  adminBookings, adminUsers,
+  adminBookings, adminUsers, adminSidebarBadges,
   logoutApi
 } from '../../core/api.js';
 
@@ -92,6 +92,23 @@ const LOADERS = {
 
 /* ================= điều hướng view ================= */
 
+async function refreshBadges() {
+  try {
+    const { badges } = await adminSidebarBadges();
+    for (const [key, count] of Object.entries(badges || {})) {
+      const el = $(`[data-badge="${key}"]`);
+      if (!el) continue;
+      el.textContent = count > 99 ? '99+' : String(count || '');
+      el.hidden = count > 0 ? false : true;
+    }
+  } catch { /* lỗi không block giao diện */ }
+}
+
+function scheduleBadges() {
+  refreshBadges();
+  setInterval(refreshBadges, 30000);
+}
+
 function showView(name) {
   state.currentView = name;
   $$('#admin-nav a').forEach(a => a.classList.toggle('on', a.dataset.view === name));
@@ -114,7 +131,7 @@ function showView(name) {
       return;
     }
     view.innerHTML = errBox(err);
-  });
+  }).finally(() => refreshBadges());
 }
 
 // Wire _showView for sub-modules that need to trigger a view refresh
@@ -147,30 +164,36 @@ function bindEvents() {
     const delP = e.target.closest('[data-del-product]');
     if (delP) return removeProduct(state, delP.dataset.delProduct);
     const bt = e.target.closest('[data-booking-toggle]');
-    if (bt) return toggleBooking(state, bt.dataset.bookingToggle);
+    if (bt) { toggleBooking(state, bt.dataset.bookingToggle).finally(refreshBadges); return; }
     const brp = e.target.closest('[data-booking-reply]');
-    if (brp) return viewBookingReply(state, brp.dataset.bookingReply);
+    if (brp) { viewBookingReply(state, brp.dataset.bookingReply); refreshBadges(); return; }
     const orp = e.target.closest('[data-order-reply]');
-    if (orp) return viewOrderReply(state, orp.dataset.orderReply);
+    if (orp) { viewOrderReply(state, orp.dataset.orderReply); refreshBadges(); return; }
     const as = e.target.closest('[data-app-status]');
     if (as) {
       const [id, status] = as.dataset.appStatus.split(':');
-      return changeAppStatus(state, id, status);
+      changeAppStatus(state, id, status).finally(refreshBadges);
+      return;
     }
     const av = e.target.closest('[data-app-view]');
     if (av) {
       e.preventDefault();
-      return viewApp(state, av.dataset.appView);
+      viewApp(state, av.dataset.appView);
+      refreshBadges();
+      return;
     }
     const fs = e.target.closest('[data-fb-status]');
     if (fs) {
       const [id, status] = fs.dataset.fbStatus.split(':');
-      return changeFbStatus(state, id, status);
+      changeFbStatus(state, id, status).finally(refreshBadges);
+      return;
     }
     const fv = e.target.closest('[data-fb-view]');
     if (fv) {
       e.preventDefault();
-      return viewFeedback(state, fv.dataset.fbView);
+      viewFeedback(state, fv.dataset.fbView);
+      refreshBadges();
+      return;
     }
     const editV = e.target.closest('[data-edit-voucher]');
     if (editV) return voucherModal(state, editV.dataset.editVoucher);
@@ -180,7 +203,7 @@ function bindEvents() {
 
   $('.admin-main').addEventListener('change', (e) => {
     const sel = e.target.closest('[data-order-status]');
-    if (sel) return changeOrderStatus(state, sel.dataset.orderStatus, sel.value);
+    if (sel) { changeOrderStatus(state, sel.dataset.orderStatus, sel.value).finally(refreshBadges); return; }
     if (e.target.id === 'order-filter') {
       state.orderFilter = e.target.value;
       renderOrders(state);
@@ -232,19 +255,18 @@ export default async function init() {
 
   bindEvents();
   showView('overview');
+  scheduleBadges();
 
   // WebSocket real-time: nhận đơn mới + cập nhật trạng thái từ bất kỳ ai
   connectAdminWS((evt) => {
     if (evt.type === 'new_order') {
+      refreshBadges();
       const label = evt.table_name ? ` · ${evt.table_name}` : '';
       toast(`Đơn mới ${evt.code}${label} — ${formatVND(evt.total)}`, 'success', 6000);
     } else if (evt.type === 'status_changed') {
+      refreshBadges();
       if (state.currentView === 'orders') loadOrders();
       if (state.currentView === 'overview') loadOverview(state);
-    }
-    if (evt.type === 'new_order') {
-      if (state.currentView === 'overview') loadOverview(state);
-      if (state.currentView === 'orders') loadOrders();
     }
   });
 }

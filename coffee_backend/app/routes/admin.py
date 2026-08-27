@@ -27,6 +27,33 @@ ALLOWED_QR_EXT = {".jpg", ".jpeg", ".png", ".webp", ".svg"}
 MAX_QR_MB = 5
 
 
+@router.get("/admin/sidebar-badges")
+def sidebar_badges(_=Depends(require_admin)):
+    """Số lượng mới/chưa xử lý cho badge ở sidebar admin."""
+    with get_conn() as conn:
+        orders = conn.execute(
+            "SELECT COUNT(*) c FROM orders WHERE status = 'new'"
+        ).fetchone()["c"]
+        bookings = conn.execute(
+            "SELECT COUNT(*) c FROM bookings WHERE reply = ''"
+        ).fetchone()["c"]
+        applications = conn.execute(
+            "SELECT COUNT(*) c FROM applications WHERE status = 'new'"
+        ).fetchone()["c"]
+        feedbacks = conn.execute(
+            "SELECT COUNT(*) c FROM feedbacks WHERE status = 'new'"
+        ).fetchone()["c"]
+    return {
+        "ok": True,
+        "badges": {
+            "orders": orders,
+            "bookings": bookings,
+            "applications": applications,
+            "feedbacks": feedbacks,
+        },
+    }
+
+
 @router.get("/admin/stats")
 def admin_stats(_=Depends(require_admin)):
     today = vn_today()

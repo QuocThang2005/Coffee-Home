@@ -171,6 +171,10 @@ export async function getAdminStats() {
   return req('/admin/stats', {}, 2500);
 }
 
+export async function adminSidebarBadges() {
+  return req('/admin/sidebar-badges', {}, 2500);
+}
+
 export async function getRevenueStats(period = 'week') {
   return req(`/admin/stats/revenue?period=${encodeURIComponent(period)}`, {}, 2500);
 }
