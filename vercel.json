@@ -3,6 +3,9 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
+    { "source": "/api/:path*", "destination": "https://coffee-home-0vsb.onrender.com/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://coffee-home-0vsb.onrender.com/uploads/:path*" },
+    { "source": "/ws/:path*", "destination": "https://coffee-home-0vsb.onrender.com/ws/:path*" },
     { "source": "/pages/:page", "destination": "/pages/:page.html" },
     { "source": "/auth/:page", "destination": "/auth/:page.html" },
     { "source": "/admin/:page", "destination": "/admin/:page.html" },
